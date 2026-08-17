@@ -599,7 +599,198 @@ var TPL_ZAAWANSOWANY = {
   }
 };
 
-var TEMPLATES = [TPL_PROSTY, TPL_DLUGI, TPL_ZAAWANSOWANY];
+/* ============================================================
+   BLOKI — do szablonu WŁASNY (buduj sam, drag&drop)
+   Każdy blok ma własny zestaw pól i funkcję render(v).
+   Style bloków korzystają z tego samego CSS co ZAAWANSOWANY —
+   zawiera on komplet klas potrzebnych dla wszystkich typów bloków.
+   ============================================================ */
+var BLOCK_DEFS = {
+
+  header: {
+    label: 'Nagłówek + hasło',
+    fields: [
+      {key:'eyebrow', label:'Nadtytuł', type:'text', def:''},
+      {key:'heading', label:'Nagłówek', type:'text', def:''},
+      {key:'subhead', label:'Podtytuł / hasło', type:'textarea', def:''}
+    ],
+    render: function(v){
+      var html = tag(has(v.eyebrow), `<div class="zn-eyebrow">${line(v.eyebrow)}</div>\n  `) +
+                 tag(has(v.heading), `<div class="zn-heading zn-serif">${line(v.heading)}</div>\n  `) +
+                 tag(has(v.subhead), `<p class="zn-subhead">${richText(v.subhead)}</p>`);
+      return html.trim();
+    }
+  },
+
+  text: {
+    label: 'Opis tekstowy',
+    fields: [
+      {key:'eyebrow', label:'Nadtytuł (opcjonalnie)', type:'text', def:''},
+      {key:'heading', label:'Nagłówek (opcjonalnie)', type:'text', def:''},
+      {key:'body', label:'Treść (pusta linia = nowy akapit, **tekst** = pogrubienie)', type:'textarea', def:''}
+    ],
+    render: function(v){
+      var html = tag(has(v.eyebrow), `<div class="zn-eyebrow">${line(v.eyebrow)}</div>\n  `) +
+                 tag(has(v.heading), `<div class="zn-heading zn-serif">${line(v.heading)}</div>\n  `) +
+                 tag(has(v.body), `<p class="zn-subhead">${richText(v.body)}</p>`);
+      return html.trim();
+    }
+  },
+
+  packaging: {
+    label: 'Zdjęcie + tekst (np. oprawa/opakowanie)',
+    fields: [
+      {key:'eyebrow', label:'Nadtytuł', type:'text', def:'Prezentacja'},
+      {key:'title', label:'Tytuł', type:'text', def:''},
+      {key:'p1', label:'Akapit 1', type:'textarea', def:''},
+      {key:'p2', label:'Akapit 2', type:'textarea', def:''}
+    ],
+    render: function(v){
+      if(!(has(v.title) || has(v.p1) || has(v.p2))) return '';
+      return `<div class="zn-heritage">
+    <div class="zn-heritage-img">
+      ${imgTag(v.__imgId, v.title || 'Zdjęcie', 'zdjęcie do bloku „' + (v.title || 'Zdjęcie + tekst') + '”')}
+    </div>
+    <div class="zn-heritage-text">
+      ${tag(has(v.eyebrow), `<div class="zn-eyebrow">${line(v.eyebrow)}</div>`)}
+      ${tag(has(v.title), `<h3 class="zn-serif">${line(v.title)}</h3>`)}
+      ${tag(has(v.p1), `<p>${richText(v.p1)}</p>`)}
+      ${tag(has(v.p2), `<p>${richText(v.p2)}</p>`)}
+    </div>
+  </div>`;
+    }
+  },
+
+  stats: {
+    label: 'Statystyki (4 liczby)',
+    fields: [
+      {key:'s1_num', label:'Liczba 1', type:'text', def:''},
+      {key:'s1_unit', label:'Jednostka 1', type:'text', def:''},
+      {key:'s1_label', label:'Opis 1', type:'text', def:''},
+      {key:'s2_num', label:'Liczba 2', type:'text', def:''},
+      {key:'s2_unit', label:'Jednostka 2', type:'text', def:''},
+      {key:'s2_label', label:'Opis 2', type:'text', def:''},
+      {key:'s3_num', label:'Liczba 3', type:'text', def:''},
+      {key:'s3_unit', label:'Jednostka 3', type:'text', def:''},
+      {key:'s3_label', label:'Opis 3', type:'text', def:''},
+      {key:'s4_num', label:'Liczba 4', type:'text', def:''},
+      {key:'s4_unit', label:'Jednostka 4', type:'text', def:''},
+      {key:'s4_label', label:'Opis 4', type:'text', def:''}
+    ],
+    render: function(v){
+      var stat = function(num, unit, label){
+        if(!has(num)) return '';
+        return `<div class="zn-stat">
+      <div class="zn-stat-rule"></div>
+      <div class="zn-stat-number">${line(num)}<sup>${line(unit)}</sup></div>
+      ${tag(has(label), `<span class="zn-stat-label">${line(label)}</span>`)}
+    </div>`;
+      };
+      var items = [stat(v.s1_num,v.s1_unit,v.s1_label), stat(v.s2_num,v.s2_unit,v.s2_label), stat(v.s3_num,v.s3_unit,v.s3_label), stat(v.s4_num,v.s4_unit,v.s4_label)].filter(Boolean);
+      return items.length ? `<div class="zn-stats">\n    ${items.join('\n    ')}\n  </div>` : '';
+    }
+  },
+
+  gallery2: {
+    label: 'Galeria — 2 zbliżenia',
+    fields: [
+      {key:'eyebrow', label:'Nadtytuł', type:'text', def:'Detal'},
+      {key:'heading', label:'Nagłówek', type:'text', def:''},
+      {key:'sub', label:'Wskazówka pod nagłówkiem', type:'text', def:'Najedź kursorem, by zobaczyć więcej.'},
+      {key:'t1_title', label:'Tytuł kafla 1', type:'text', def:''},
+      {key:'t1_desc', label:'Opis kafla 1', type:'textarea', def:''},
+      {key:'t2_title', label:'Tytuł kafla 2', type:'text', def:''},
+      {key:'t2_desc', label:'Opis kafla 2', type:'textarea', def:''}
+    ],
+    render: function(v){
+      var heading = tag(has(v.eyebrow), `<div class="zn-eyebrow">${line(v.eyebrow)}</div>\n  `) +
+                    tag(has(v.heading), `<div class="zn-heading zn-serif">${line(v.heading)}</div>\n  `) +
+                    tag(has(v.sub), `<p class="zn-subhead">${line(v.sub)}</p>`);
+      heading = heading.trim();
+      var tile1 = (has(v.t1_title) || has(v.t1_desc)) ? `<div class="zn-closeup-tile">
+      ${imgTag(v.__imgId + '-1', v.t1_title || 'Zdjęcie 1', 'zbliżenie do kafla „' + (v.t1_title || '1') + '”')}
+      <div class="zn-closeup-caption">
+        <div class="zn-closeup-rule"></div>
+        ${tag(has(v.t1_title), `<strong>${line(v.t1_title)}</strong>`)}
+        ${tag(has(v.t1_desc), `<span>${richText(v.t1_desc)}</span>`)}
+      </div>
+    </div>` : '';
+      var tile2 = (has(v.t2_title) || has(v.t2_desc)) ? `<div class="zn-closeup-tile">
+      ${imgTag(v.__imgId + '-2', v.t2_title || 'Zdjęcie 2', 'zbliżenie do kafla „' + (v.t2_title || '2') + '”')}
+      <div class="zn-closeup-caption">
+        <div class="zn-closeup-rule"></div>
+        ${tag(has(v.t2_title), `<strong>${line(v.t2_title)}</strong>`)}
+        ${tag(has(v.t2_desc), `<span>${richText(v.t2_desc)}</span>`)}
+      </div>
+    </div>` : '';
+      var tiles = [tile1, tile2].filter(Boolean);
+      if(!heading && !tiles.length) return '';
+      return `${heading}${heading && tiles.length ? '\n\n  ' : ''}${tiles.length ? `<div class="zn-closeup-grid">\n    ${tiles.join('\n    ')}\n  </div>` : ''}`.trim();
+    }
+  },
+
+  trust: {
+    label: 'Pasek zaufania (3 punkty)',
+    fields: [
+      {key:'t1_t', label:'Tytuł 1 (ikona: medal)', type:'text', def:''},
+      {key:'t1_d', label:'Opis 1', type:'textarea', def:''},
+      {key:'t2_t', label:'Tytuł 2 (ikona: opakowanie)', type:'text', def:''},
+      {key:'t2_d', label:'Opis 2', type:'textarea', def:''},
+      {key:'t3_t', label:'Tytuł 3 (ikona: tarcza)', type:'text', def:''},
+      {key:'t3_d', label:'Opis 3', type:'textarea', def:''}
+    ],
+    render: function(v){
+      var items = [
+        (has(v.t1_t) || has(v.t1_d)) ? `<div class="zn-trust-item">\n      ${ICONS.medal}\n      ${tag(has(v.t1_t), `<strong>${line(v.t1_t)}</strong>`)}\n      ${tag(has(v.t1_d), `<span>${richText(v.t1_d)}</span>`)}\n    </div>` : '',
+        (has(v.t2_t) || has(v.t2_d)) ? `<div class="zn-trust-item">\n      ${ICONS.box}\n      ${tag(has(v.t2_t), `<strong>${line(v.t2_t)}</strong>`)}\n      ${tag(has(v.t2_d), `<span>${richText(v.t2_d)}</span>`)}\n    </div>` : '',
+        (has(v.t3_t) || has(v.t3_d)) ? `<div class="zn-trust-item">\n      ${ICONS.shield}\n      ${tag(has(v.t3_t), `<strong>${line(v.t3_t)}</strong>`)}\n      ${tag(has(v.t3_d), `<span>${richText(v.t3_d)}</span>`)}\n    </div>` : ''
+      ].filter(Boolean);
+      return items.length ? `<div class="zn-trust">\n    ${items.join('\n    ')}\n  </div>` : '';
+    }
+  },
+
+  statement: {
+    label: 'Cytat',
+    fields: [
+      {key:'eyebrow', label:'Nadtytuł (opcjonalnie)', type:'text', def:''},
+      {key:'text', label:'Treść cytatu', type:'textarea', def:''},
+      {key:'signature', label:'Podpis', type:'text', def:''}
+    ],
+    render: function(v){
+      if(!(has(v.eyebrow) || has(v.text) || has(v.signature))) return '';
+      return `<div class="zn-statement">
+    ${tag(has(v.eyebrow), `<div class="zn-eyebrow">${line(v.eyebrow)}</div>`)}
+    ${tag(has(v.text), `<p>${richText(v.text)}</p>`)}
+    ${tag(has(v.signature), `<div class="zn-signature">${line(v.signature)}</div>`)}
+  </div>`;
+    }
+  },
+
+  faq: {
+    label: 'FAQ (do 3 pytań)',
+    fields: [
+      {key:'q1', label:'Pytanie 1', type:'text', def:''},
+      {key:'a1', label:'Odpowiedź 1', type:'textarea', def:''},
+      {key:'q2', label:'Pytanie 2', type:'text', def:''},
+      {key:'a2', label:'Odpowiedź 2', type:'textarea', def:''},
+      {key:'q3', label:'Pytanie 3', type:'text', def:''},
+      {key:'a3', label:'Odpowiedź 3', type:'textarea', def:''}
+    ],
+    render: function(v){
+      var blocks = [[v.q1,v.a1],[v.q2,v.a2],[v.q3,v.a3]]
+        .filter(function(p){ return has(p[0]); })
+        .map(function(p,i){ return `    <details${i===0?' open':''}>\n      <summary>${line(p[0])}</summary>\n      <div class="zn-faq-body">${richText(p[1])}</div>\n    </details>`; })
+        .join('\n');
+      return blocks ? `<div class="zn-faq">\n${blocks}\n  </div>` : '';
+    }
+  }
+};
+
+var TPL_WLASNY = {
+  id: 'wlasny', name: 'WŁASNY', desc: 'buduj sam z bloków — dodawaj i przeciągaj', isCustom: true, fields: []
+};
+
+var TEMPLATES = [TPL_PROSTY, TPL_DLUGI, TPL_ZAAWANSOWANY, TPL_WLASNY];
 
 /* ============================================================
    APLIKACJA
@@ -607,6 +798,9 @@ var TEMPLATES = [TPL_PROSTY, TPL_DLUGI, TPL_ZAAWANSOWANY];
 var currentTpl = null;
 var values = {};
 var removedFields = new Set(); // resetuje się przy każdym odświeżeniu strony / zmianie szablonu
+var customBlocks = []; // dla szablonu WŁASNY: [{id, type, values}] — resetuje się tylko po odświeżeniu strony
+var blockIdSeq = 1;
+var dragBlockId = null;
 
 function initPicker(){
   var wrap = document.getElementById('tplPicker');
@@ -626,6 +820,7 @@ function selectTemplate(id){
   values = {};
   removedFields = new Set();
   currentTpl.fields.forEach(function(f){ values[f.key] = f.def || ''; });
+  // uwaga: customBlocks (szablon WŁASNY) NIE resetuje się przy przełączaniu — tylko przy odświeżeniu strony
   document.querySelectorAll('.tpl-btn').forEach(function(b){
     b.classList.toggle('active', b.dataset.id === id);
   });
@@ -637,7 +832,32 @@ function fieldsInSection(section){
   return currentTpl.fields.filter(function(f){ return f.section === section; });
 }
 
+// tworzy label+input (lub textarea) dla dowolnego pola, wpina do rodzica; działa dla pól szablonu i pól bloku
+function appendFieldInput(parent, fieldDef, getVal, setVal, onRemove){
+  var labelRow = document.createElement('div');
+  labelRow.className = 'field-label-row';
+  var lbl = document.createElement('label');
+  lbl.textContent = fieldDef.label;
+  labelRow.appendChild(lbl);
+  if(onRemove){
+    var removeBtn = document.createElement('button');
+    removeBtn.className = 'field-remove-btn';
+    removeBtn.textContent = '✕ usuń';
+    removeBtn.title = 'Usuń to pole z opisu';
+    removeBtn.addEventListener('click', onRemove);
+    labelRow.appendChild(removeBtn);
+  }
+  parent.appendChild(labelRow);
+
+  var input = fieldDef.type === 'textarea' ? document.createElement('textarea') : document.createElement('input');
+  if(fieldDef.type !== 'textarea') input.type = 'text';
+  input.value = getVal() || '';
+  input.addEventListener('input', function(){ setVal(input.value); });
+  parent.appendChild(input);
+}
+
 function renderForm(){
+  if(currentTpl.isCustom){ renderCustomForm(); return; }
   var area = document.getElementById('formArea');
   area.innerHTML = '';
   var sections = []; // { label: string|null, fields: [] }
@@ -741,8 +961,128 @@ function effectiveValues(){
   return out;
 }
 
+/* ============================================================
+   SZABLON WŁASNY — formularz blokowy z drag&drop
+   ============================================================ */
+function addBlock(type){
+  var def = BLOCK_DEFS[type];
+  var v = {};
+  def.fields.forEach(function(f){ v[f.key] = f.def || ''; });
+  customBlocks.push({ id: blockIdSeq++, type: type, values: v });
+  renderForm();
+  renderPreview();
+}
+
+function renderCustomForm(){
+  var area = document.getElementById('formArea');
+  area.innerHTML = '';
+
+  var addRow = document.createElement('div');
+  addRow.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;';
+  var select = document.createElement('select');
+  select.style.cssText = 'flex:1;min-width:180px;font-size:13px;padding:8px 10px;border:1px solid #d8d6cf;border-radius:7px;background:#fdfdfc;';
+  Object.keys(BLOCK_DEFS).forEach(function(type){
+    var opt = document.createElement('option');
+    opt.value = type; opt.textContent = BLOCK_DEFS[type].label;
+    select.appendChild(opt);
+  });
+  var addBtn = document.createElement('button');
+  addBtn.textContent = '+ Dodaj blok';
+  addBtn.className = 'copy-btn';
+  addBtn.style.cssText = 'padding:8px 16px;font-size:13px;';
+  addBtn.addEventListener('click', function(){ addBlock(select.value); });
+  addRow.appendChild(select);
+  addRow.appendChild(addBtn);
+  area.appendChild(addRow);
+
+  if(!customBlocks.length){
+    var empty = document.createElement('p');
+    empty.style.cssText = 'font-size:13px;color:#999;';
+    empty.textContent = 'Brak bloków — dodaj pierwszy z listy powyżej.';
+    area.appendChild(empty);
+    return;
+  }
+
+  customBlocks.forEach(function(block, idx){
+    var def = BLOCK_DEFS[block.type];
+    var card = document.createElement('div');
+    card.className = 'block-card';
+    card.draggable = true;
+    card.dataset.blockId = block.id;
+    card.style.cssText = 'border:1px solid #e0ded7;border-radius:9px;padding:12px 14px 14px;margin-bottom:12px;background:#fafaf8;';
+
+    var cardHead = document.createElement('div');
+    cardHead.style.cssText = 'display:flex;align-items:center;justify-content:space-between;cursor:grab;';
+    var titleWrap = document.createElement('div');
+    titleWrap.style.cssText = 'display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:#444;';
+    titleWrap.innerHTML = '<span style="color:#bbb;">⠿</span><span>' + (idx+1) + '. ' + def.label + '</span>';
+    cardHead.appendChild(titleWrap);
+    var removeBlockBtn = document.createElement('button');
+    removeBlockBtn.className = 'field-remove-btn';
+    removeBlockBtn.textContent = '✕ usuń blok';
+    removeBlockBtn.addEventListener('click', function(){
+      customBlocks = customBlocks.filter(function(b){ return b.id !== block.id; });
+      renderForm(); renderPreview();
+    });
+    cardHead.appendChild(removeBlockBtn);
+    card.appendChild(cardHead);
+
+    def.fields.forEach(function(f){
+      appendFieldInput(card, f,
+        function(){ return block.values[f.key]; },
+        function(val){ block.values[f.key] = val; renderPreview(); }
+      );
+    });
+
+    // drag & drop reorder (myszką, desktop)
+    card.addEventListener('dragstart', function(e){
+      dragBlockId = block.id;
+      card.style.opacity = '0.4';
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    card.addEventListener('dragend', function(){
+      card.style.opacity = '1';
+      dragBlockId = null;
+    });
+    card.addEventListener('dragover', function(e){
+      e.preventDefault();
+      card.style.borderColor = '#b08d4f';
+    });
+    card.addEventListener('dragleave', function(){
+      card.style.borderColor = '#e0ded7';
+    });
+    card.addEventListener('drop', function(e){
+      e.preventDefault();
+      card.style.borderColor = '#e0ded7';
+      if(dragBlockId === null || dragBlockId === block.id) return;
+      var fromIdx = customBlocks.findIndex(function(b){ return b.id === dragBlockId; });
+      var toIdx = customBlocks.findIndex(function(b){ return b.id === block.id; });
+      if(fromIdx === -1 || toIdx === -1) return;
+      var moved = customBlocks.splice(fromIdx, 1)[0];
+      customBlocks.splice(toIdx, 0, moved);
+      renderForm(); renderPreview();
+    });
+
+    area.appendChild(card);
+  });
+}
+
+function buildCustomHtml(){
+  var sections = customBlocks.map(function(block, idx){
+    var def = BLOCK_DEFS[block.type];
+    var v = Object.assign({}, block.values, { __imgId: 'blok-' + (idx+1) });
+    return def.render(v);
+  });
+  return `<div class="zn-wrap">
+  <style>${CSS_ZAAWANSOWANY}</style>
+
+  ${joinSections(sections)}
+
+</div>`;
+}
+
 function renderPreview(){
-  var html = currentTpl.render(effectiveValues());
+  var html = currentTpl.isCustom ? buildCustomHtml() : currentTpl.render(effectiveValues());
   var previewHtml = html.replace(/src="PODMIEN-ZDJECIE-([^"]+)"/g, function(_, id){
     return 'src="' + placeholderPreviewSrc('ZDJĘCIE ' + id + ' — do podmiany') + '"';
   });
@@ -751,7 +1091,7 @@ function renderPreview(){
 
 document.getElementById('copyBtn').addEventListener('click', function(){
   if(!currentTpl) return;
-  var html = currentTpl.render(effectiveValues());
+  var html = currentTpl.isCustom ? buildCustomHtml() : currentTpl.render(effectiveValues());
   navigator.clipboard.writeText(html).then(function(){
     var btn = document.getElementById('copyBtn');
     var status = document.getElementById('copyStatus');
