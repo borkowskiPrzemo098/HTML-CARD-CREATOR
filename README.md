@@ -21,6 +21,19 @@ te adresy na docelowe linki do zdjęć bezpośrednio w kodzie.
 - Pusta linia w polu tekstowym = nowy akapit (`<br><br>`).
 - `**tekst**` = pogrubienie (`<b>tekst</b>`).
 
+## Zapis roboczy, walidacja i cofanie
+
+- **Autozapis**: treść zapisuje się na bieżąco w tej przeglądarce (localStorage).
+  Zamknięcie karty lub przypadkowe odświeżenie nie kasuje wpisanej treści —
+  po powrocie pojawia się baner „Przywrócono niezapisaną wcześniej pracę”.
+  Przycisk **„🗑 Wyczyść wszystko”** czyści zapis i zaczyna od zera.
+- **Cofnij (Ctrl+Z)**: przywraca stan sprzed ostatniej strukturalnej zmiany
+  (usunięcie/przywrócenie pola lub sekcji, dodanie/usunięcie/przesunięcie bloku).
+  Nie cofa pojedynczych znaków w polu tekstowym.
+- **Walidacja przed kopiowaniem**: kliknięcie „Kopiuj kod HTML” pokazuje listę
+  zdjęć do podmiany w kodzie oraz ostrzeżenia o polach z niezmienionym
+  przykładowym tekstem szablonu — można poprawić albo skopiować mimo to.
+
 ## Hosting
 
 Strona to pojedynczy plik `index.html` bez zależności backendowych — działa
