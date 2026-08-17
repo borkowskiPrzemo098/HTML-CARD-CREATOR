@@ -28,26 +28,34 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04); border: 1px solid #e7e5df;
   }
   .card h2 { font-size: 15px; margin: 0 0 14px; font-weight: 600; }
-  .card h3.section-label {
+
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    margin: 22px 0 10px; border-top: 1px solid #eee; padding-top: 16px;
+  }
+  .section-header:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+  .section-header h3.section-label {
     font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px;
-    color: #b08d4f; margin: 22px 0 10px; border-top: 1px solid #eee; padding-top: 16px;
+    color: #b08d4f; margin: 0;
   }
-  .card h3.section-label:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+  .section-toggle {
+    font-size: 11px; font-weight: 600; color: #999; background: none; border: 1px solid #ddd;
+    border-radius: 6px; padding: 3px 8px; cursor: pointer; white-space: nowrap;
+  }
+  .section-toggle:hover { border-color: #c0392b; color: #c0392b; }
+  .section-toggle.is-removed { border-color: #3a7d44; color: #3a7d44; }
+  .section-toggle.is-removed:hover { border-color: #3a7d44; color: #3a7d44; }
 
-  .tpl-picker { display: flex; gap: 12px; flex-wrap: wrap; }
-  .tpl-btn {
-    flex: 1 1 140px; cursor: pointer; border: 2px solid #e0ded7; border-radius: 10px;
-    background: #fafaf8; padding: 16px 12px; text-align: center; transition: all .15s ease;
-  }
-  .tpl-btn:hover { border-color: #b08d4f; }
-  .tpl-btn.active { border-color: #b08d4f; background: #fbf6ec; box-shadow: 0 0 0 3px rgba(176,141,79,0.15); }
-  .tpl-btn strong { display: block; font-size: 13.5px; margin-bottom: 4px; }
-  .tpl-btn span { font-size: 11.5px; color: #777; }
-
-  label {
-    display: block; font-size: 12.5px; font-weight: 600; color: #444; margin: 12px 0 5px;
-  }
+  .field-row { margin-bottom: 4px; }
+  .field-label-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin: 12px 0 5px; }
+  label { font-size: 12.5px; font-weight: 600; color: #444; margin: 0; }
   label .hint { font-weight: 400; color: #999; font-size: 11px; }
+  .field-remove-btn {
+    font-size: 11px; color: #b5b5b5; background: none; border: none; cursor: pointer; padding: 0 2px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .field-remove-btn:hover { color: #c0392b; }
+
   input[type=text], textarea {
     width: 100%; font-family: inherit; font-size: 13.5px; padding: 9px 10px;
     border: 1px solid #d8d6cf; border-radius: 7px; background: #fdfdfc; resize: vertical;
@@ -55,8 +63,23 @@
   textarea { min-height: 70px; line-height: 1.5; }
   input[type=text]:focus, textarea:focus { outline: none; border-color: #b08d4f; background: #fff; }
 
-  .field-row { display: flex; gap: 10px; }
-  .field-row > div { flex: 1; }
+  .field-removed-bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    background: #f7f7f5; border: 1px dashed #ccc; border-radius: 7px; padding: 8px 10px; margin: 12px 0 5px;
+    font-size: 12.5px; color: #999;
+  }
+  .field-removed-bar button {
+    font-size: 11.5px; font-weight: 600; color: #b08d4f; background: none; border: none; cursor: pointer;
+  }
+  .field-removed-bar button:hover { text-decoration: underline; }
+
+  .section-removed-bar {
+    background: #f7f7f5; border: 1px dashed #ccc; border-radius: 7px; padding: 10px 12px; margin: 10px 0;
+    font-size: 12.5px; color: #999; display: flex; align-items: center; justify-content: space-between;
+  }
+  .section-removed-bar button {
+    font-size: 11.5px; font-weight: 600; color: #b08d4f; background: none; border: none; cursor: pointer;
+  }
 
   .img-note {
     background: #fff7e9; border: 1px dashed #d9b774; border-radius: 7px; padding: 8px 10px;
@@ -73,6 +96,16 @@
   }
   button.copy-btn:hover { background: #b08d4f; }
   button.copy-btn.copied { background: #3a7d44; }
+
+  .tpl-picker { display: flex; gap: 12px; flex-wrap: wrap; }
+  .tpl-btn {
+    flex: 1 1 140px; cursor: pointer; border: 2px solid #e0ded7; border-radius: 10px;
+    background: #fafaf8; padding: 16px 12px; text-align: center; transition: all .15s ease;
+  }
+  .tpl-btn:hover { border-color: #b08d4f; }
+  .tpl-btn.active { border-color: #b08d4f; background: #fbf6ec; box-shadow: 0 0 0 3px rgba(176,141,79,0.15); }
+  .tpl-btn strong { display: block; font-size: 13.5px; margin-bottom: 4px; }
+  .tpl-btn span { font-size: 11.5px; color: #777; }
 
   .preview-frame-wrap {
     background: #fff; border-radius: 12px; border: 1px solid #e7e5df; overflow: hidden;
@@ -100,7 +133,7 @@
 
 <header class="app-header">
   <h1>HTML Card Creator</h1>
-  <p>Wklej tekst do odpowiednich pól, zobacz podgląd i skopiuj gotowy kod HTML do opisu produktu w e-Sklep.</p>
+  <p>Wklej tekst do odpowiednich pól, zobacz podgląd i skopiuj gotowy kod HTML do opisu produktu w e-Sklep. Niepotrzebne pole lub całą sekcję możesz usunąć przyciskiem „✕” — po odświeżeniu strony wszystko wraca do domyślnego stanu.</p>
 </header>
 
 <div class="layout">
@@ -141,9 +174,9 @@
 function esc(s){
   return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
-// zamienia **pogrubienie** na <b>, pojedyncze enter zachowuje jako spacja, podwójny enter (pusta linia) jako nowy akapit <br><br>
 function richText(s){
   var e = esc(s||'').trim();
+  if(!e) return '';
   e = e.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
   var paragraphs = e.split(/\n\s*\n/).map(function(p){ return p.trim().replace(/\n/g,' '); }).filter(Boolean);
   return paragraphs.join('<br><br>');
@@ -151,6 +184,7 @@ function richText(s){
 function line(s){
   return esc(s||'').trim().replace(/\n/g,' ');
 }
+function has(s){ return !!(s && String(s).trim()); }
 function ph(id){ return 'PODMIEN-ZDJECIE-' + id + '.jpg'; }
 function imgTag(id, alt, note){
   return '<!-- ZDJĘCIE DO PODMIANY: ' + note + ' -->\n      <img src="' + ph(id) + '" alt="' + esc(alt) + '">';
@@ -162,6 +196,12 @@ function placeholderPreviewSrc(label){
     '</svg>';
   return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
 }
+// łączy sekcje (stringi HTML), pomijając puste/false, wstawiając <hr> tylko między widocznymi sekcjami
+function joinSections(sections){
+  return sections.filter(function(s){ return s && String(s).trim(); })
+                  .join('\n\n  <hr class="zn-hairline">\n\n  ');
+}
+function tag(cond, html){ return cond ? html : ''; }
 
 /* ============================================================
    WSPÓLNE SVG IKONY (pasek zaufania)
@@ -297,49 +337,52 @@ var TPL_PROSTY = {
     {key:'signature', label:'Podpis / marka', type:'text', def:'AZ AURUM — Doskonały pomysł na prezent'}
   ],
   render: function(v){
-    return `<div class="zn-wrap">
-  <style>${CSS_PROSTY_DLUGI}</style>
+    var header = tag(has(v.eyebrow), `<div class="zn-eyebrow">${line(v.eyebrow)}</div>\n  `) +
+                 tag(has(v.heading), `<div class="zn-heading zn-serif">${line(v.heading)}</div>\n  `) +
+                 tag(has(v.subhead), `<p class="zn-subhead">${line(v.subhead)}</p>`);
 
-  <div class="zn-eyebrow">${line(v.eyebrow)}</div>
-  <div class="zn-heading zn-serif">${line(v.heading)}</div>
-  <p class="zn-subhead">${line(v.subhead)}</p>
-
-  <hr class="zn-hairline">
-
-  <div class="zn-packaging">
+    var packaging = (has(v.pack_title) || has(v.pack_p1) || has(v.pack_p2)) ? `<div class="zn-packaging">
     <div class="zn-packaging-img">
       ${imgTag(1, 'Oprawa produktu', 'zdjęcie opakowania/oprawy')}
     </div>
     <div class="zn-packaging-text">
       <div class="zn-eyebrow">Prezentacja</div>
-      <h3 class="zn-serif">${line(v.pack_title)}</h3>
-      <p>${richText(v.pack_p1)}</p>
-      <p>${richText(v.pack_p2)}</p>
+      ${tag(has(v.pack_title), `<h3 class="zn-serif">${line(v.pack_title)}</h3>`)}
+      ${tag(has(v.pack_p1), `<p>${richText(v.pack_p1)}</p>`)}
+      ${tag(has(v.pack_p2), `<p>${richText(v.pack_p2)}</p>`)}
     </div>
-  </div>
+  </div>` : '';
 
-  <div class="zn-trust">
-    <div class="zn-trust-item">
+    var trustItems = [
+      (has(v.trust1_t) || has(v.trust1_d)) ? `<div class="zn-trust-item">
       ${ICONS.medal}
-      <strong>${line(v.trust1_t)}</strong>
-      <span>${richText(v.trust1_d)}</span>
-    </div>
-    <div class="zn-trust-item">
+      ${tag(has(v.trust1_t), `<strong>${line(v.trust1_t)}</strong>`)}
+      ${tag(has(v.trust1_d), `<span>${richText(v.trust1_d)}</span>`)}
+    </div>` : '',
+      (has(v.trust2_t) || has(v.trust2_d)) ? `<div class="zn-trust-item">
       ${ICONS.box}
-      <strong>${line(v.trust2_t)}</strong>
-      <span>${richText(v.trust2_d)}</span>
-    </div>
-    <div class="zn-trust-item">
+      ${tag(has(v.trust2_t), `<strong>${line(v.trust2_t)}</strong>`)}
+      ${tag(has(v.trust2_d), `<span>${richText(v.trust2_d)}</span>`)}
+    </div>` : '',
+      (has(v.trust3_t) || has(v.trust3_d)) ? `<div class="zn-trust-item">
       ${ICONS.shield}
-      <strong>${line(v.trust3_t)}</strong>
-      <span>${richText(v.trust3_d)}</span>
-    </div>
-  </div>
+      ${tag(has(v.trust3_t), `<strong>${line(v.trust3_t)}</strong>`)}
+      ${tag(has(v.trust3_d), `<span>${richText(v.trust3_d)}</span>`)}
+    </div>` : ''
+    ].filter(Boolean);
+    var trust = trustItems.length ? `<div class="zn-trust">\n    ${trustItems.join('\n    ')}\n  </div>` : '';
 
-  <div class="zn-statement">
-    <p>${richText(v.quote)}</p>
-    <div class="zn-signature">${line(v.signature)}</div>
-  </div>
+    var statement = (has(v.quote) || has(v.signature)) ? `<div class="zn-statement">
+    ${tag(has(v.quote), `<p>${richText(v.quote)}</p>`)}
+    ${tag(has(v.signature), `<div class="zn-signature">${line(v.signature)}</div>`)}
+  </div>` : '';
+
+    return `<div class="zn-wrap">
+  <style>${CSS_PROSTY_DLUGI}</style>
+
+  ${header}
+
+  ${joinSections([packaging, trust, statement])}
 
 </div>`;
   }
@@ -365,35 +408,35 @@ var TPL_DLUGI = {
     {key:'desc2', label:'Opis (kilka akapitów — rozdziel pustą linią)', type:'textarea', def:''}
   ],
   render: function(v){
-    return `<div class="zn-wrap">
-  <style>${CSS_PROSTY_DLUGI}</style>
+    var section1 = tag(has(v.eyebrow1), `<div class="zn-eyebrow">${line(v.eyebrow1)}</div>\n  `) +
+                   tag(has(v.heading1), `<div class="zn-heading zn-serif">${line(v.heading1)}</div>\n  `) +
+                   tag(has(v.subheading1), `<h3>${line(v.subheading1)}</h3>\n\n  `) +
+                   tag(has(v.desc1), `<p class="zn-subhead">${richText(v.desc1)}</p>`);
+    section1 = section1.trim();
 
-  <div class="zn-eyebrow">${line(v.eyebrow1)}</div>
-  <div class="zn-heading zn-serif">${line(v.heading1)}</div>
-
-  <h3>${line(v.subheading1)}</h3>
-
-  <p class="zn-subhead">${richText(v.desc1)}</p>
-
-  <hr class="zn-hairline">
-
-  <div class="zn-packaging">
+    var packaging = (has(v.pack_title) || has(v.pack_p1) || has(v.pack_p2)) ? `<div class="zn-packaging">
     <div class="zn-packaging-img">
       ${imgTag(1, 'Oprawa produktu', 'zdjęcie opakowania/oprawy')}
     </div>
     <div class="zn-packaging-text">
       <div class="zn-eyebrow">Prezentacja</div>
-      <h3 class="zn-serif">${line(v.pack_title)}</h3>
-      <p>${richText(v.pack_p1)}</p>
-      <p>${richText(v.pack_p2)}</p>
+      ${tag(has(v.pack_title), `<h3 class="zn-serif">${line(v.pack_title)}</h3>`)}
+      ${tag(has(v.pack_p1), `<p>${richText(v.pack_p1)}</p>`)}
+      ${tag(has(v.pack_p2), `<p>${richText(v.pack_p2)}</p>`)}
     </div>
-  </div>
+  </div>` : '';
 
-  <hr class="zn-hairline">
+    var section2 = (has(v.eyebrow2) || has(v.heading2) || has(v.desc2)) ?
+      tag(has(v.eyebrow2), `<div class="zn-eyebrow">${line(v.eyebrow2)}</div>\n  `) +
+      tag(has(v.heading2), `<div class="zn-heading zn-serif">${line(v.heading2)}</div>\n  `) +
+      tag(has(v.desc2), `<p class="zn-subhead">${richText(v.desc2)}</p>`)
+      : '';
+    section2 = section2.trim();
 
-  <div class="zn-eyebrow">${line(v.eyebrow2)}</div>
-  <div class="zn-heading zn-serif">${line(v.heading2)}</div>
-  <p class="zn-subhead">${richText(v.desc2)}</p>
+    return `<div class="zn-wrap">
+  <style>${CSS_PROSTY_DLUGI}</style>
+
+  ${joinSections([section1, packaging, section2])}
 
 </div>`;
   }
@@ -454,110 +497,104 @@ var TPL_ZAAWANSOWANY = {
     {key:'faq3_a', label:'Odpowiedź 3', type:'textarea', def:''}
   ],
   render: function(v){
+    var header = tag(has(v.eyebrow_lead), `<div class="zn-eyebrow">${line(v.eyebrow_lead)}</div>\n  `) +
+                 tag(has(v.heading_lead), `<div class="zn-heading zn-serif">${line(v.heading_lead)}</div>\n  `) +
+                 tag(has(v.subhead_lead), `<p class="zn-subhead">${richText(v.subhead_lead)}</p>`);
+    header = header.trim();
+
     var stat = function(num, unit, label){
+      if(!has(num)) return '';
       return `<div class="zn-stat">
       <div class="zn-stat-rule"></div>
       <div class="zn-stat-number">${line(num)}<sup>${line(unit)}</sup></div>
-      <span class="zn-stat-label">${line(label)}</span>
+      ${tag(has(label), `<span class="zn-stat-label">${line(label)}</span>`)}
     </div>`;
     };
+    var statsItems = [
+      stat(v.s1_num, v.s1_unit, v.s1_label),
+      stat(v.s2_num, v.s2_unit, v.s2_label),
+      stat(v.s3_num, v.s3_unit, v.s3_label),
+      stat(v.s4_num, v.s4_unit, v.s4_label)
+    ].filter(Boolean);
+    var stats = statsItems.length ? `<div class="zn-stats">\n    ${statsItems.join('\n    ')}\n  </div>` : '';
+
+    var closeupHeading = tag(has(v.detail_eyebrow), `<div class="zn-eyebrow">${line(v.detail_eyebrow)}</div>\n  `) +
+                          tag(has(v.detail_heading), `<div class="zn-heading zn-serif">${line(v.detail_heading)}</div>\n  `) +
+                          tag(has(v.detail_sub), `<p class="zn-subhead">${line(v.detail_sub)}</p>`);
+    closeupHeading = closeupHeading.trim();
+
+    var tileObverse = (has(v.obverse_title) || has(v.obverse_desc)) ? `<div class="zn-closeup-tile">
+      ${imgTag(1, v.obverse_title || 'Awers', 'zbliżenie AWERSU')}
+      <div class="zn-closeup-caption">
+        <div class="zn-closeup-rule"></div>
+        ${tag(has(v.obverse_title), `<strong>${line(v.obverse_title)}</strong>`)}
+        ${tag(has(v.obverse_desc), `<span>${richText(v.obverse_desc)}</span>`)}
+      </div>
+    </div>` : '';
+    var tileReverse = (has(v.reverse_title) || has(v.reverse_desc)) ? `<div class="zn-closeup-tile">
+      ${imgTag(2, v.reverse_title || 'Rewers', 'zbliżenie REWERSU')}
+      <div class="zn-closeup-caption">
+        <div class="zn-closeup-rule"></div>
+        ${tag(has(v.reverse_title), `<strong>${line(v.reverse_title)}</strong>`)}
+        ${tag(has(v.reverse_desc), `<span>${richText(v.reverse_desc)}</span>`)}
+      </div>
+    </div>` : '';
+    var tiles = [tileObverse, tileReverse].filter(Boolean);
+    var closeup = (closeupHeading || tiles.length) ? `${closeupHeading}${closeupHeading && tiles.length ? '\n\n  ' : ''}${tiles.length ? `<div class="zn-closeup-grid">\n    ${tiles.join('\n    ')}\n  </div>` : ''}`.trim() : '';
+
+    var heritage = (has(v.heritage_eyebrow) || has(v.heritage_title) || has(v.heritage_p1) || has(v.heritage_p2)) ? `<div class="zn-heritage">
+    <div class="zn-heritage-img">
+      ${imgTag(3, v.heritage_title || 'Kasetka kolekcjonerska', 'zdjęcie kasetki kolekcjonerskiej')}
+    </div>
+    <div class="zn-heritage-text">
+      ${tag(has(v.heritage_eyebrow), `<div class="zn-eyebrow">${line(v.heritage_eyebrow)}</div>`)}
+      ${tag(has(v.heritage_title), `<h3 class="zn-serif">${line(v.heritage_title)}</h3>`)}
+      ${tag(has(v.heritage_p1), `<p>${richText(v.heritage_p1)}</p>`)}
+      ${tag(has(v.heritage_p2), `<p>${richText(v.heritage_p2)}</p>`)}
+    </div>
+  </div>` : '';
+
+    var statement = (has(v.quote_eyebrow) || has(v.quote_text) || has(v.quote_signature)) ? `<div class="zn-statement">
+    ${tag(has(v.quote_eyebrow), `<div class="zn-eyebrow">${line(v.quote_eyebrow)}</div>`)}
+    ${tag(has(v.quote_text), `<p>${richText(v.quote_text)}</p>`)}
+    ${tag(has(v.quote_signature), `<div class="zn-signature">${line(v.quote_signature)}</div>`)}
+  </div>` : '';
+
+    var trustItems = [
+      (has(v.trust1_t) || has(v.trust1_d)) ? `<div class="zn-trust-item">
+      ${ICONS.medal}
+      ${tag(has(v.trust1_t), `<strong>${line(v.trust1_t)}</strong>`)}
+      ${tag(has(v.trust1_d), `<span>${richText(v.trust1_d)}</span>`)}
+    </div>` : '',
+      (has(v.trust2_t) || has(v.trust2_d)) ? `<div class="zn-trust-item">
+      ${ICONS.box}
+      ${tag(has(v.trust2_t), `<strong>${line(v.trust2_t)}</strong>`)}
+      ${tag(has(v.trust2_d), `<span>${richText(v.trust2_d)}</span>`)}
+    </div>` : '',
+      (has(v.trust3_t) || has(v.trust3_d)) ? `<div class="zn-trust-item">
+      ${ICONS.shield}
+      ${tag(has(v.trust3_t), `<strong>${line(v.trust3_t)}</strong>`)}
+      ${tag(has(v.trust3_d), `<span>${richText(v.trust3_d)}</span>`)}
+    </div>` : ''
+    ].filter(Boolean);
+    var trust = trustItems.length ? `<div class="zn-trust">\n    ${trustItems.join('\n    ')}\n  </div>` : '';
+
     var faqBlocks = [
       [v.faq1_q, v.faq1_a], [v.faq2_q, v.faq2_a], [v.faq3_q, v.faq3_a]
-    ].filter(function(pair){ return pair[0] && pair[0].trim(); })
+    ].filter(function(pair){ return has(pair[0]); })
      .map(function(pair, i){
         return `    <details${i===0 ? ' open' : ''}>
       <summary>${line(pair[0])}</summary>
       <div class="zn-faq-body">${richText(pair[1])}</div>
     </details>`;
      }).join('\n');
+    var faq = faqBlocks ? `<div class="zn-faq">\n${faqBlocks}\n  </div>` : '';
 
     return `<div class="zn-wrap">
   <style>${CSS_ZAAWANSOWANY}</style>
 
-  <div class="zn-eyebrow">${line(v.eyebrow_lead)}</div>
-  <div class="zn-heading zn-serif">${line(v.heading_lead)}</div>
-  <p class="zn-subhead">${richText(v.subhead_lead)}</p>
+  ${joinSections([header, stats, closeup, heritage, statement, trust, faq])}
 
-  <div class="zn-stats">
-${stat(v.s1_num, v.s1_unit, v.s1_label)}
-${stat(v.s2_num, v.s2_unit, v.s2_label)}
-${stat(v.s3_num, v.s3_unit, v.s3_label)}
-${stat(v.s4_num, v.s4_unit, v.s4_label)}
-  </div>
-
-  <hr class="zn-hairline">
-
-  <div class="zn-eyebrow">${line(v.detail_eyebrow)}</div>
-  <div class="zn-heading zn-serif">${line(v.detail_heading)}</div>
-  <p class="zn-subhead">${line(v.detail_sub)}</p>
-
-  <div class="zn-closeup-grid">
-    <div class="zn-closeup-tile">
-      ${imgTag(1, v.obverse_title, 'zbliżenie AWERSU')}
-      <div class="zn-closeup-caption">
-        <div class="zn-closeup-rule"></div>
-        <strong>${line(v.obverse_title)}</strong>
-        <span>${richText(v.obverse_desc)}</span>
-      </div>
-    </div>
-    <div class="zn-closeup-tile">
-      ${imgTag(2, v.reverse_title, 'zbliżenie REWERSU')}
-      <div class="zn-closeup-caption">
-        <div class="zn-closeup-rule"></div>
-        <strong>${line(v.reverse_title)}</strong>
-        <span>${richText(v.reverse_desc)}</span>
-      </div>
-    </div>
-  </div>
-
-  <hr class="zn-hairline">
-
-  <div class="zn-heritage">
-    <div class="zn-heritage-img">
-      ${imgTag(3, v.heritage_title, 'zdjęcie kasetki kolekcjonerskiej')}
-    </div>
-    <div class="zn-heritage-text">
-      <div class="zn-eyebrow">${line(v.heritage_eyebrow)}</div>
-      <h3 class="zn-serif">${line(v.heritage_title)}</h3>
-      <p>${richText(v.heritage_p1)}</p>
-      <p>${richText(v.heritage_p2)}</p>
-    </div>
-  </div>
-
-  <hr class="zn-hairline">
-
-  <div class="zn-statement">
-    <div class="zn-eyebrow">${line(v.quote_eyebrow)}</div>
-    <p>${richText(v.quote_text)}</p>
-    <div class="zn-signature">${line(v.quote_signature)}</div>
-  </div>
-
-  <hr class="zn-hairline">
-
-  <div class="zn-trust">
-    <div class="zn-trust-item">
-      ${ICONS.medal}
-      <strong>${line(v.trust1_t)}</strong>
-      <span>${richText(v.trust1_d)}</span>
-    </div>
-    <div class="zn-trust-item">
-      ${ICONS.box}
-      <strong>${line(v.trust2_t)}</strong>
-      <span>${richText(v.trust2_d)}</span>
-    </div>
-    <div class="zn-trust-item">
-      ${ICONS.shield}
-      <strong>${line(v.trust3_t)}</strong>
-      <span>${richText(v.trust3_d)}</span>
-    </div>
-  </div>
-${faqBlocks ? `
-  <hr class="zn-hairline">
-
-  <div class="zn-faq">
-${faqBlocks}
-  </div>
-` : ''}
 </div>`;
   }
 };
@@ -569,6 +606,7 @@ var TEMPLATES = [TPL_PROSTY, TPL_DLUGI, TPL_ZAAWANSOWANY];
    ============================================================ */
 var currentTpl = null;
 var values = {};
+var removedFields = new Set(); // resetuje się przy każdym odświeżeniu strony / zmianie szablonu
 
 function initPicker(){
   var wrap = document.getElementById('tplPicker');
@@ -586,6 +624,7 @@ function initPicker(){
 function selectTemplate(id){
   currentTpl = TEMPLATES.find(function(t){ return t.id === id; });
   values = {};
+  removedFields = new Set();
   currentTpl.fields.forEach(function(f){ values[f.key] = f.def || ''; });
   document.querySelectorAll('.tpl-btn').forEach(function(b){
     b.classList.toggle('active', b.dataset.id === id);
@@ -594,39 +633,116 @@ function selectTemplate(id){
   renderPreview();
 }
 
+function fieldsInSection(section){
+  return currentTpl.fields.filter(function(f){ return f.section === section; });
+}
+
 function renderForm(){
   var area = document.getElementById('formArea');
   area.innerHTML = '';
-  var lastSection = null;
+  var sections = []; // { label: string|null, fields: [] }
   currentTpl.fields.forEach(function(f){
-    if(f.section && f.section !== lastSection){
+    if(f.section || sections.length === 0){
+      sections.push({ label: f.section || null, fields: [] });
+    }
+    sections[sections.length - 1].fields.push(f);
+  });
+
+  sections.forEach(function(sec){
+    if(sec.label){
+      var allRemoved = sec.fields.every(function(f){ return removedFields.has(f.key); });
+      var header = document.createElement('div');
+      header.className = 'section-header';
       var h = document.createElement('h3');
       h.className = 'section-label';
-      h.textContent = f.section;
-      area.appendChild(h);
-      lastSection = f.section;
+      h.textContent = sec.label;
+      header.appendChild(h);
+      var toggle = document.createElement('button');
+      toggle.className = 'section-toggle' + (allRemoved ? ' is-removed' : '');
+      toggle.textContent = allRemoved ? '↺ Przywróć sekcję' : '✕ Usuń sekcję';
+      toggle.addEventListener('click', function(){
+        if(allRemoved){
+          sec.fields.forEach(function(f){ removedFields.delete(f.key); });
+        } else {
+          sec.fields.forEach(function(f){ removedFields.add(f.key); });
+        }
+        renderForm();
+        renderPreview();
+      });
+      header.appendChild(toggle);
+      area.appendChild(header);
+
+      if(allRemoved){
+        var bar = document.createElement('div');
+        bar.className = 'section-removed-bar';
+        bar.innerHTML = '<span>Cała sekcja usunięta z opisu.</span>';
+        area.appendChild(bar);
+        return; // nie renderuj pól tej sekcji
+      }
     }
-    var lbl = document.createElement('label');
-    lbl.textContent = f.label;
-    area.appendChild(lbl);
-    var input;
-    if(f.type === 'textarea'){
-      input = document.createElement('textarea');
-    } else {
-      input = document.createElement('input');
-      input.type = 'text';
-    }
-    input.value = values[f.key] || '';
-    input.addEventListener('input', function(){
-      values[f.key] = input.value;
-      renderPreview();
+
+    sec.fields.forEach(function(f){
+      if(removedFields.has(f.key)){
+        var bar2 = document.createElement('div');
+        bar2.className = 'field-removed-bar';
+        bar2.innerHTML = '<span>„' + f.label + '” — usunięte</span>';
+        var restoreBtn = document.createElement('button');
+        restoreBtn.textContent = '↺ Przywróć';
+        restoreBtn.addEventListener('click', function(){
+          removedFields.delete(f.key);
+          renderForm();
+          renderPreview();
+        });
+        bar2.appendChild(restoreBtn);
+        area.appendChild(bar2);
+        return;
+      }
+
+      var labelRow = document.createElement('div');
+      labelRow.className = 'field-label-row';
+      var lbl = document.createElement('label');
+      lbl.textContent = f.label;
+      labelRow.appendChild(lbl);
+      var removeBtn = document.createElement('button');
+      removeBtn.className = 'field-remove-btn';
+      removeBtn.textContent = '✕ usuń';
+      removeBtn.title = 'Usuń to pole z opisu';
+      removeBtn.addEventListener('click', function(){
+        removedFields.add(f.key);
+        renderForm();
+        renderPreview();
+      });
+      labelRow.appendChild(removeBtn);
+      area.appendChild(labelRow);
+
+      var input;
+      if(f.type === 'textarea'){
+        input = document.createElement('textarea');
+      } else {
+        input = document.createElement('input');
+        input.type = 'text';
+      }
+      input.value = values[f.key] || '';
+      input.addEventListener('input', function(){
+        values[f.key] = input.value;
+        renderPreview();
+      });
+      area.appendChild(input);
     });
-    area.appendChild(input);
   });
 }
 
+// zwraca kopię wartości, z usuniętymi polami potraktowanymi jako puste
+function effectiveValues(){
+  var out = {};
+  currentTpl.fields.forEach(function(f){
+    out[f.key] = removedFields.has(f.key) ? '' : (values[f.key] || '');
+  });
+  return out;
+}
+
 function renderPreview(){
-  var html = currentTpl.render(values);
+  var html = currentTpl.render(effectiveValues());
   var previewHtml = html.replace(/src="PODMIEN-ZDJECIE-([^"]+)"/g, function(_, id){
     return 'src="' + placeholderPreviewSrc('ZDJĘCIE ' + id + ' — do podmiany') + '"';
   });
@@ -635,7 +751,7 @@ function renderPreview(){
 
 document.getElementById('copyBtn').addEventListener('click', function(){
   if(!currentTpl) return;
-  var html = currentTpl.render(values);
+  var html = currentTpl.render(effectiveValues());
   navigator.clipboard.writeText(html).then(function(){
     var btn = document.getElementById('copyBtn');
     var status = document.getElementById('copyStatus');
