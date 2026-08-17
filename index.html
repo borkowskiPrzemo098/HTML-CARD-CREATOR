@@ -189,6 +189,7 @@
   <div class="panel-right">
     <div class="copy-bar">
       <button class="copy-btn" id="copyBtn">Kopiuj kod HTML</button>
+      <button class="tool-btn" id="copyWordBtn" title="Kopiuje sam tekst (bez zdjęć) z zachowanym formatowaniem — do wklejenia w Wordzie">📄 Kopiuj jako tekst (Word)</button>
       <button class="tool-btn" id="undoBtn" disabled title="Cofnij ostatnie usunięcie (Ctrl+Z)">↶ Cofnij</button>
       <button class="tool-btn" id="clearAllBtn" title="Usuń zapisaną pracę i zacznij od nowa">🗑 Wyczyść wszystko</button>
       <span id="copyStatus" style="font-size:12.5px;color:#666;"></span>
@@ -221,6 +222,13 @@ function line(s){
   return esc(s||'').trim().replace(/\n/g,' ');
 }
 function has(s){ return !!(s && String(s).trim()); }
+// jak richText, ale zwraca tablicę akapitów (do budowania osobnych <p> przy eksporcie do Worda)
+function splitParagraphsBold(s){
+  var e = esc(s||'').trim();
+  if(!e) return [];
+  e = e.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  return e.split(/\n\s*\n/).map(function(p){ return p.trim().replace(/\n/g,' '); }).filter(Boolean);
+}
 function ph(id){ return 'PODMIEN-ZDJECIE-' + id + '.jpg'; }
 function imgTag(id, alt, note){
   return '<!-- ZDJĘCIE DO PODMIANY: ' + note + ' -->\n      <img src="' + ph(id) + '" alt="' + esc(alt) + '">';
@@ -421,6 +429,23 @@ var TPL_PROSTY = {
   ${joinSections([packaging, trust, statement])}
 
 </div>`;
+  },
+  wordOutline: function(v){
+    var out = [];
+    function addLine(role, val){ if(has(val)) out.push({role: role, text: line(val)}); }
+    function addBody(val){ splitParagraphsBold(val).forEach(function(p){ out.push({role:'body', text: p}); }); }
+    addLine('subheading', v.eyebrow);
+    addLine('heading', v.heading);
+    addLine('subheading', v.subhead);
+    addLine('subheading', v.pack_title);
+    addBody(v.pack_p1);
+    addBody(v.pack_p2);
+    addLine('subheading', v.trust1_t); addBody(v.trust1_d);
+    addLine('subheading', v.trust2_t); addBody(v.trust2_d);
+    addLine('subheading', v.trust3_t); addBody(v.trust3_d);
+    addBody(v.quote);
+    addLine('subheading', v.signature);
+    return out;
   }
 };
 
@@ -475,6 +500,22 @@ var TPL_DLUGI = {
   ${joinSections([section1, packaging, section2])}
 
 </div>`;
+  },
+  wordOutline: function(v){
+    var out = [];
+    function addLine(role, val){ if(has(val)) out.push({role: role, text: line(val)}); }
+    function addBody(val){ splitParagraphsBold(val).forEach(function(p){ out.push({role:'body', text: p}); }); }
+    addLine('subheading', v.eyebrow1);
+    addLine('heading', v.heading1);
+    addLine('subheading', v.subheading1);
+    addBody(v.desc1);
+    addLine('subheading', v.pack_title);
+    addBody(v.pack_p1);
+    addBody(v.pack_p2);
+    addLine('subheading', v.eyebrow2);
+    addLine('heading', v.heading2);
+    addBody(v.desc2);
+    return out;
   }
 };
 
@@ -632,6 +673,41 @@ var TPL_ZAAWANSOWANY = {
   ${joinSections([header, stats, closeup, heritage, statement, trust, faq])}
 
 </div>`;
+  },
+  wordOutline: function(v){
+    var out = [];
+    function addLine(role, val){ if(has(val)) out.push({role: role, text: line(val)}); }
+    function addBody(val){ splitParagraphsBold(val).forEach(function(p){ out.push({role:'body', text: p}); }); }
+    function addStat(num, unit, label){
+      if(!has(num)) return;
+      var t = line(num) + (has(unit) ? ' ' + line(unit) : '') + (has(label) ? ' — ' + line(label) : '');
+      out.push({role: 'subheading', text: t});
+    }
+    addLine('subheading', v.eyebrow_lead);
+    addLine('heading', v.heading_lead);
+    addBody(v.subhead_lead);
+    addStat(v.s1_num, v.s1_unit, v.s1_label);
+    addStat(v.s2_num, v.s2_unit, v.s2_label);
+    addStat(v.s3_num, v.s3_unit, v.s3_label);
+    addStat(v.s4_num, v.s4_unit, v.s4_label);
+    addLine('subheading', v.detail_eyebrow);
+    addLine('heading', v.detail_heading);
+    addLine('subheading', v.obverse_title); addBody(v.obverse_desc);
+    addLine('subheading', v.reverse_title); addBody(v.reverse_desc);
+    addLine('subheading', v.heritage_eyebrow);
+    addLine('heading', v.heritage_title);
+    addBody(v.heritage_p1);
+    addBody(v.heritage_p2);
+    addLine('subheading', v.quote_eyebrow);
+    addBody(v.quote_text);
+    addLine('subheading', v.quote_signature);
+    addLine('subheading', v.trust1_t); addBody(v.trust1_d);
+    addLine('subheading', v.trust2_t); addBody(v.trust2_d);
+    addLine('subheading', v.trust3_t); addBody(v.trust3_d);
+    [[v.faq1_q,v.faq1_a],[v.faq2_q,v.faq2_a],[v.faq3_q,v.faq3_a]].forEach(function(pair){
+      addLine('subheading', pair[0]); addBody(pair[1]);
+    });
+    return out;
   }
 };
 
@@ -655,6 +731,13 @@ var BLOCK_DEFS = {
                  tag(has(v.heading), `<div class="zn-heading zn-serif">${line(v.heading)}</div>\n  `) +
                  tag(has(v.subhead), `<p class="zn-subhead">${richText(v.subhead)}</p>`);
       return html.trim();
+    },
+    wordOutline: function(v){
+      var out = [];
+      if(has(v.eyebrow)) out.push({role:'subheading', text: line(v.eyebrow)});
+      if(has(v.heading)) out.push({role:'heading', text: line(v.heading)});
+      splitParagraphsBold(v.subhead).forEach(function(p){ out.push({role:'body', text: p}); });
+      return out;
     }
   },
 
@@ -670,6 +753,13 @@ var BLOCK_DEFS = {
                  tag(has(v.heading), `<div class="zn-heading zn-serif">${line(v.heading)}</div>\n  `) +
                  tag(has(v.body), `<p class="zn-subhead">${richText(v.body)}</p>`);
       return html.trim();
+    },
+    wordOutline: function(v){
+      var out = [];
+      if(has(v.eyebrow)) out.push({role:'subheading', text: line(v.eyebrow)});
+      if(has(v.heading)) out.push({role:'heading', text: line(v.heading)});
+      splitParagraphsBold(v.body).forEach(function(p){ out.push({role:'body', text: p}); });
+      return out;
     }
   },
 
@@ -694,6 +784,14 @@ var BLOCK_DEFS = {
       ${tag(has(v.p2), `<p>${richText(v.p2)}</p>`)}
     </div>
   </div>`;
+    },
+    wordOutline: function(v){
+      var out = [];
+      if(has(v.eyebrow)) out.push({role:'subheading', text: line(v.eyebrow)});
+      if(has(v.title)) out.push({role:'heading', text: line(v.title)});
+      splitParagraphsBold(v.p1).forEach(function(p){ out.push({role:'body', text: p}); });
+      splitParagraphsBold(v.p2).forEach(function(p){ out.push({role:'body', text: p}); });
+      return out;
     }
   },
 
@@ -724,6 +822,19 @@ var BLOCK_DEFS = {
       };
       var items = [stat(v.s1_num,v.s1_unit,v.s1_label), stat(v.s2_num,v.s2_unit,v.s2_label), stat(v.s3_num,v.s3_unit,v.s3_label), stat(v.s4_num,v.s4_unit,v.s4_label)].filter(Boolean);
       return items.length ? `<div class="zn-stats">\n    ${items.join('\n    ')}\n  </div>` : '';
+    },
+    wordOutline: function(v){
+      var out = [];
+      function addStat(num, unit, label){
+        if(!has(num)) return;
+        var t = line(num) + (has(unit) ? ' ' + line(unit) : '') + (has(label) ? ' — ' + line(label) : '');
+        out.push({role:'subheading', text: t});
+      }
+      addStat(v.s1_num,v.s1_unit,v.s1_label);
+      addStat(v.s2_num,v.s2_unit,v.s2_label);
+      addStat(v.s3_num,v.s3_unit,v.s3_label);
+      addStat(v.s4_num,v.s4_unit,v.s4_label);
+      return out;
     }
   },
 
@@ -762,6 +873,17 @@ var BLOCK_DEFS = {
       var tiles = [tile1, tile2].filter(Boolean);
       if(!heading && !tiles.length) return '';
       return `${heading}${heading && tiles.length ? '\n\n  ' : ''}${tiles.length ? `<div class="zn-closeup-grid">\n    ${tiles.join('\n    ')}\n  </div>` : ''}`.trim();
+    },
+    wordOutline: function(v){
+      var out = [];
+      if(has(v.eyebrow)) out.push({role:'subheading', text: line(v.eyebrow)});
+      if(has(v.heading)) out.push({role:'heading', text: line(v.heading)});
+      if(has(v.sub)) out.push({role:'body', text: line(v.sub)});
+      if(has(v.t1_title)) out.push({role:'subheading', text: line(v.t1_title)});
+      splitParagraphsBold(v.t1_desc).forEach(function(p){ out.push({role:'body', text: p}); });
+      if(has(v.t2_title)) out.push({role:'subheading', text: line(v.t2_title)});
+      splitParagraphsBold(v.t2_desc).forEach(function(p){ out.push({role:'body', text: p}); });
+      return out;
     }
   },
 
@@ -782,6 +904,14 @@ var BLOCK_DEFS = {
         (has(v.t3_t) || has(v.t3_d)) ? `<div class="zn-trust-item">\n      ${ICONS.shield}\n      ${tag(has(v.t3_t), `<strong>${line(v.t3_t)}</strong>`)}\n      ${tag(has(v.t3_d), `<span>${richText(v.t3_d)}</span>`)}\n    </div>` : ''
       ].filter(Boolean);
       return items.length ? `<div class="zn-trust">\n    ${items.join('\n    ')}\n  </div>` : '';
+    },
+    wordOutline: function(v){
+      var out = [];
+      [[v.t1_t,v.t1_d],[v.t2_t,v.t2_d],[v.t3_t,v.t3_d]].forEach(function(pair){
+        if(has(pair[0])) out.push({role:'subheading', text: line(pair[0])});
+        splitParagraphsBold(pair[1]).forEach(function(p){ out.push({role:'body', text: p}); });
+      });
+      return out;
     }
   },
 
@@ -799,6 +929,13 @@ var BLOCK_DEFS = {
     ${tag(has(v.text), `<p>${richText(v.text)}</p>`)}
     ${tag(has(v.signature), `<div class="zn-signature">${line(v.signature)}</div>`)}
   </div>`;
+    },
+    wordOutline: function(v){
+      var out = [];
+      if(has(v.eyebrow)) out.push({role:'subheading', text: line(v.eyebrow)});
+      splitParagraphsBold(v.text).forEach(function(p){ out.push({role:'body', text: p}); });
+      if(has(v.signature)) out.push({role:'subheading', text: line(v.signature)});
+      return out;
     }
   },
 
@@ -818,6 +955,14 @@ var BLOCK_DEFS = {
         .map(function(p,i){ return `    <details${i===0?' open':''}>\n      <summary>${line(p[0])}</summary>\n      <div class="zn-faq-body">${richText(p[1])}</div>\n    </details>`; })
         .join('\n');
       return blocks ? `<div class="zn-faq">\n${blocks}\n  </div>` : '';
+    },
+    wordOutline: function(v){
+      var out = [];
+      [[v.q1,v.a1],[v.q2,v.a2],[v.q3,v.a3]].forEach(function(pair){
+        if(has(pair[0])) out.push({role:'subheading', text: line(pair[0])});
+        splitParagraphsBold(pair[1]).forEach(function(p){ out.push({role:'body', text: p}); });
+      });
+      return out;
     }
   }
 };
@@ -1241,6 +1386,84 @@ function collectUnchangedDefaults(){
   return warnings;
 }
 
+/* ============================================================
+   KOPIUJ JAKO TEKST (WORD) — sam tekst, bez zdjęć, z 3-poziomową
+   hierarchią (nagłówek / podtytuł / tekst), wklejany do schowka
+   jednocześnie jako HTML (Word odczytuje formatowanie) i plain text
+   (fallback dla Notatnika itp.)
+   ============================================================ */
+function buildWordOutline(){
+  if(currentTpl.isCustom){
+    var out = [];
+    customBlocks.forEach(function(block){
+      var def = BLOCK_DEFS[block.type];
+      if(def && def.wordOutline) out = out.concat(def.wordOutline(block.values));
+    });
+    return out;
+  }
+  var v = effectiveValues();
+  return currentTpl.wordOutline ? currentTpl.wordOutline(v) : [];
+}
+
+var WORD_STYLES = {
+  heading: 'font-size:20pt;font-weight:700;margin:0 0 10pt 0;font-family:Calibri,Arial,sans-serif;',
+  subheading: 'font-size:14pt;font-weight:700;margin:14pt 0 4pt 0;font-family:Calibri,Arial,sans-serif;',
+  body: 'font-size:11pt;font-weight:400;margin:0 0 8pt 0;line-height:1.4;font-family:Calibri,Arial,sans-serif;'
+};
+
+function outlineToHtml(outline){
+  var body = outline.map(function(item){
+    var style = WORD_STYLES[item.role] || WORD_STYLES.body;
+    return '<p style="' + style + '">' + item.text + '</p>';
+  }).join('\n');
+  return '<html><head><meta charset="utf-8"></head><body>' + body + '</body></html>';
+}
+
+function unescapeHtml(s){
+  return s.replace(/<b>(.*?)<\/b>/g, '$1').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+}
+
+function outlineToPlain(outline){
+  return outline.map(function(item){
+    var t = unescapeHtml(item.text);
+    return item.role === 'heading' ? t.toUpperCase() : t;
+  }).join('\n\n');
+}
+
+function runCopyWord(){
+  var status = document.getElementById('copyStatus');
+  var outline = buildWordOutline();
+  if(!outline.length){
+    status.textContent = 'Brak treści do skopiowania — uzupełnij pola formularza.';
+    setTimeout(function(){ status.textContent = ''; }, 2500);
+    return;
+  }
+  var html = outlineToHtml(outline);
+  var text = outlineToPlain(outline);
+  var btn = document.getElementById('copyWordBtn');
+
+  function done(){
+    btn.textContent = 'Skopiowano ✓';
+    status.textContent = 'Tekst skopiowany — wklej go w dokumencie Word (Ctrl+V).';
+    setTimeout(function(){
+      btn.textContent = '📄 Kopiuj jako tekst (Word)';
+      status.textContent = '';
+    }, 2200);
+  }
+
+  if(window.ClipboardItem){
+    var item = new ClipboardItem({
+      'text/html': new Blob([html], {type:'text/html'}),
+      'text/plain': new Blob([text], {type:'text/plain'})
+    });
+    navigator.clipboard.write([item]).then(done).catch(function(){
+      navigator.clipboard.writeText(text).then(done);
+    });
+  } else {
+    navigator.clipboard.writeText(text).then(done);
+  }
+}
+
 function runCopy(){
   var btn = document.getElementById('copyBtn');
   var status = document.getElementById('copyStatus');
@@ -1309,6 +1532,7 @@ document.getElementById('copyBtn').addEventListener('click', function(){
   }
 });
 
+document.getElementById('copyWordBtn').addEventListener('click', runCopyWord);
 document.getElementById('undoBtn').addEventListener('click', performUndo);
 document.addEventListener('keydown', function(e){
   var isUndoCombo = (e.ctrlKey || e.metaKey) && !e.shiftKey && (e.key === 'z' || e.key === 'Z');

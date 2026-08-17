@@ -34,6 +34,13 @@ te adresy na docelowe linki do zdjęć bezpośrednio w kodzie.
   zdjęć do podmiany w kodzie oraz ostrzeżenia o polach z niezmienionym
   przykładowym tekstem szablonu — można poprawić albo skopiować mimo to.
 
+## Kopiuj jako tekst (Word)
+
+Drugi przycisk obok „Kopiuj kod HTML" — kopiuje sam tekst, **bez zdjęć**,
+z zachowanym formatowaniem (nagłówek / podtytuł-hasło / zwykły tekst,
+różne wielkości i pogrubienia). Po wklejeniu (Ctrl+V) w Wordzie hierarchia
+jest widoczna od razu, bez ręcznego formatowania.
+
 ## Hosting
 
 Strona to pojedynczy plik `index.html` bez zależności backendowych — działa
