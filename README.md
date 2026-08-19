@@ -51,10 +51,13 @@ strony, **bez logowania**. Lista jest pogrupowana datami, najnowsze na
 górze. Kliknięcie w pozycję otwiera ten szablon gotowy do dalszej edycji
 (można cofnąć Ctrl+Z, jeśli otworzono przez pomyłkę).
 
-Backend to darmowy Google Apps Script + Arkusz Google — konfiguracja
-jednorazowa, patrz [`google-apps-script/README.md`](./google-apps-script/README.md).
-Dopóki nie zostanie skonfigurowana, strona działa normalnie, a w miejscu
-listy pojawia się informacja o brakującej konfiguracji.
+Backend (do wyboru, konfiguracja jednorazowa):
+- **Vercel + GitHub (rekomendowane)** — patrz [`vercel-backend/README.md`](./vercel-backend/README.md).
+  Dane trafiają jako commity do pliku `templates/index.json` w tym repo.
+- **Google Sheets + Apps Script (alternatywa)** — patrz [`google-apps-script/README.md`](./google-apps-script/README.md).
+
+Dopóki żaden backend nie zostanie skonfigurowany, strona działa normalnie,
+a w miejscu listy pojawia się informacja o brakującej konfiguracji.
 
 ## Hosting
 

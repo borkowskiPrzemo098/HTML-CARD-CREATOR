@@ -1033,11 +1033,17 @@ var TEMPLATES = [TPL_PROSTY, TPL_DLUGI, TPL_ZAAWANSOWANY, TPL_WLASNY];
    APLIKACJA
    ============================================================ */
 /* ============================================================
-   WSPÓLNE SZABLONY (Google Sheets + Apps Script)
-   — widoczne dla każdego, kto ma link do strony, bez logowania.
-   Konfiguracja jednorazowa: patrz google-apps-script/README.md
+   WSPÓLNE SZABLONY — widoczne dla każdego, kto ma link do strony,
+   bez logowania. Wybierz JEDEN backend i wklej jego adres poniżej
+   (jeśli oba są ustawione, pierwszeństwo ma Vercel):
+   — Vercel + GitHub: patrz vercel-backend/README.md (rekomendowane)
+   — Google Sheets + Apps Script: patrz google-apps-script/README.md
    ============================================================ */
-var SHEETS_API_URL = ''; // <-- wklej tu adres wdrożonego Web App (Google Apps Script)
+var VERCEL_API_URL = ''; // <-- wklej tu adres funkcji Vercel, np. https://xxx.vercel.app/api/templates
+var SHEETS_API_URL = ''; // <-- alternatywnie: adres wdrożonego Web App (Google Apps Script)
+
+function activeApiUrl(){ return VERCEL_API_URL || SHEETS_API_URL || ''; }
+function usingVercel(){ return !!VERCEL_API_URL; }
 
 var currentTpl = null;
 var values = {};
@@ -1128,20 +1134,37 @@ function updateUndoBtn(){
    API — wspólne szablony (Google Sheets + Apps Script)
    ============================================================ */
 function apiListTemplates(){
-  if(!SHEETS_API_URL) return Promise.resolve(null); // null = brak konfiguracji
-  return fetch(SHEETS_API_URL + '?action=list')
+  var url = activeApiUrl();
+  if(!url) return Promise.resolve(null); // null = brak konfiguracji
+  var sep = url.indexOf('?') > -1 ? '&' : '?';
+  return fetch(url + sep + 'action=list')
     .then(function(r){ return r.json(); })
     .then(function(data){ return (data && data.items) || []; })
     .catch(function(){ return 'error'; });
 }
 
 function apiSaveTemplate(name, tplId, stateObj){
-  if(!SHEETS_API_URL) return Promise.reject(new Error('not-configured'));
-  return fetch(SHEETS_API_URL, {
+  var url = activeApiUrl();
+  if(!url) return Promise.reject(new Error('not-configured'));
+  if(usingVercel()){
+    // Vercel: JSON wprost, obiekt stanu bez podwójnego stringify — funkcja ma pełną kontrolę nad CORS/OPTIONS
+    return fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'save', name: name, tplId: tplId, state: stateObj })
+    }).then(function(r){ return r.json(); });
+  }
+  // Google Apps Script: text/plain, żeby uniknąć CORS preflight; stan jako string w komórce arkusza
+  return fetch(url, {
     method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // unika CORS preflight w Apps Script
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({ action: 'save', name: name, tplId: tplId, state: JSON.stringify(stateObj) })
   }).then(function(r){ return r.json(); });
+}
+
+// stan zapisany przez Vercel przychodzi jako obiekt, przez Google Sheets jako string JSON w komórce
+function parseTemplateState(rawState){
+  return typeof rawState === 'string' ? JSON.parse(rawState) : rawState;
 }
 
 function templateTypeName(tplId){
@@ -1154,9 +1177,9 @@ function renderSavedTemplatesList(items){
   var list = document.getElementById('savedTemplatesList');
   list.innerHTML = '';
 
-  if(!SHEETS_API_URL){
+  if(!activeApiUrl()){
     status.className = 'saved-tpl-status';
-    status.innerHTML = 'Lista współdzielonych szablonów nie jest jeszcze skonfigurowana — patrz <code>google-apps-script/README.md</code> w repozytorium.';
+    status.innerHTML = 'Lista współdzielonych szablonów nie jest jeszcze skonfigurowana — patrz <code>vercel-backend/README.md</code> (rekomendowane) albo <code>google-apps-script/README.md</code> w repozytorium.';
     return;
   }
   if(items === 'error'){
@@ -1199,7 +1222,7 @@ function renderSavedTemplatesList(items){
     row.appendChild(badge);
     row.addEventListener('click', function(){
       var parsed;
-      try{ parsed = JSON.parse(item.state); }catch(e){ alert('Nie udało się wczytać tego szablonu.'); return; }
+      try{ parsed = parseTemplateState(item.state); }catch(e){ alert('Nie udało się wczytać tego szablonu.'); return; }
       pushUndo();
       applyState(parsed);
       document.getElementById('restoreBanner').innerHTML = '';
@@ -1211,7 +1234,7 @@ function renderSavedTemplatesList(items){
 
 function loadSavedTemplatesList(){
   var status = document.getElementById('savedTemplatesStatus');
-  if(SHEETS_API_URL){ status.className = 'saved-tpl-status'; status.textContent = 'Wczytywanie listy…'; }
+  if(activeApiUrl()){ status.className = 'saved-tpl-status'; status.textContent = 'Wczytywanie listy…'; }
   apiListTemplates().then(renderSavedTemplatesList);
 }
 
@@ -1243,7 +1266,7 @@ function showSaveTemplateModal(){
   saveBtn.addEventListener('click', function(){
     var name = input.value.trim();
     if(!name){ errorMsg.textContent = 'Podaj nazwę szablonu.'; return; }
-    if(!SHEETS_API_URL){ errorMsg.textContent = 'Wspólne szablony nie są jeszcze skonfigurowane (patrz google-apps-script/README.md).'; return; }
+    if(!activeApiUrl()){ errorMsg.textContent = 'Wspólne szablony nie są jeszcze skonfigurowane (patrz vercel-backend/README.md).'; return; }
     saveBtn.disabled = true;
     saveBtn.textContent = 'Zapisywanie…';
     apiSaveTemplate(name, currentTpl.id, captureState()).then(function(res){
