@@ -54,5 +54,33 @@
       "customBlocks": [],
       "blockIdSeq": 1
     }
+  },
+  {
+    "id": "tpl_mszwn8hcn30v7h",
+    "name": "Do zmiany nazwy",
+    "savedAt": "2026-08-19T09:44:23.472Z",
+    "tplId": "prosty",
+    "state": {
+      "tplId": "prosty",
+      "values": {
+        "eyebrow": "IKONA MEZOZOIKU",
+        "heading": "Triceratops",
+        "subhead": "Niewzruszona forteca utrwalona w złocie",
+        "pack_title": "Oprawa godna kolekcjonera",
+        "pack_p1": "Numizmat zamknięty jest w eleganckiej karcie zabezpieczającej zaprojektowanej z myślą o jego ekspozycji i długotrwałym przechowywaniu.",
+        "pack_p2": "Okaz spoczywa w przejrzystym blistrze – to gotowa forma prezentu, bez potrzeby dodatkowego, ozdobnego opakowania.",
+        "trust1_t": "Certyfikat autentyczności",
+        "trust1_d": "Numizmat posiada swój własny certyfikat w formie dedykowanej karty zabezpieczającej.",
+        "trust2_t": "Oryginalne opakowanie",
+        "trust2_d": "Elegancka karta z numizmatem jest gotowa do wręczenia, bez dodatkowego pakowania.",
+        "trust3_t": "Bezpieczna dostawa",
+        "trust3_d": "Dyskretnie zapakowana przesyłka została dostosowana do przewozu metali szlachetnych.",
+        "quote": "Prehistoria jeszcze nigdy nie wyglądała tak efektownie.",
+        "signature": "AZ AURUM — Doskonały pomysł na prezent"
+      },
+      "removed": [],
+      "customBlocks": [],
+      "blockIdSeq": 1
+    }
   }
 ]
