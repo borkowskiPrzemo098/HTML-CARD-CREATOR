@@ -1039,7 +1039,7 @@ var TEMPLATES = [TPL_PROSTY, TPL_DLUGI, TPL_ZAAWANSOWANY, TPL_WLASNY];
    — Vercel + GitHub: patrz vercel-backend/README.md (rekomendowane)
    — Google Sheets + Apps Script: patrz google-apps-script/README.md
    ============================================================ */
-var VERCEL_API_URL = ''; // <-- wklej tu adres funkcji Vercel, np. https://xxx.vercel.app/api/templates
+var VERCEL_API_URL = 'https://html-card-creator.vercel.app/api/templates';
 var SHEETS_API_URL = ''; // <-- alternatywnie: adres wdrożonego Web App (Google Apps Script)
 
 function activeApiUrl(){ return VERCEL_API_URL || SHEETS_API_URL || ''; }
