@@ -155,6 +155,40 @@
     border: 1px dashed #bbb;
   }
 
+  .card-head-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .card-head-row h2 { margin: 0; }
+  .icon-btn {
+    background: none; border: 1px solid #d8d6cf; border-radius: 7px; padding: 5px 9px; font-size: 12px;
+    color: #666; cursor: pointer;
+  }
+  .icon-btn:hover { border-color: #b08d4f; color: #b08d4f; }
+
+  .saved-tpl-status { font-size: 12.5px; color: #999; padding: 4px 0; }
+  .saved-tpl-status.error { color: #c0392b; }
+  .saved-tpl-date-group { margin-bottom: 6px; }
+  .saved-tpl-date-group h4 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #b08d4f;
+    margin: 14px 0 6px;
+  }
+  .saved-tpl-date-group:first-of-type h4 { margin-top: 0; }
+  .saved-tpl-item {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px; cursor: pointer;
+    padding: 9px 10px; border-radius: 8px; border: 1px solid transparent;
+  }
+  .saved-tpl-item:hover { background: #faf6ec; border-color: #e8d9b8; }
+  .saved-tpl-item-name { font-size: 13px; font-weight: 600; color: #333; }
+  .saved-tpl-item-meta { font-size: 11px; color: #999; }
+  .saved-tpl-badge {
+    font-size: 10.5px; font-weight: 700; color: #b08d4f; background: #fbf6ec; border-radius: 5px;
+    padding: 2px 6px; text-transform: uppercase; letter-spacing: 0.3px; white-space: nowrap;
+  }
+
+  .save-modal-input {
+    width: 100%; font-size: 14px; padding: 10px 12px; border: 1px solid #d8d6cf; border-radius: 7px;
+    margin: 4px 0 2px;
+  }
+  .save-modal-input:focus { outline: none; border-color: #b08d4f; }
+
   footer { text-align: center; font-size: 11.5px; color: #999; padding: 20px; }
 
   @media (max-width: 900px) {
@@ -174,6 +208,15 @@
   <div class="panel-left">
 
     <div class="card">
+      <div class="card-head-row">
+        <h2>Zapisane szablony <span style="font-weight:400;color:#999;">(widoczne dla wszystkich)</span></h2>
+        <button class="icon-btn" id="refreshTplBtn" title="Odśwież listę">🔄</button>
+      </div>
+      <div id="savedTemplatesStatus" class="saved-tpl-status"></div>
+      <div id="savedTemplatesList"></div>
+    </div>
+
+    <div class="card">
       <h2>1. Wybierz szablon</h2>
       <div class="tpl-picker" id="tplPicker"></div>
     </div>
@@ -191,6 +234,7 @@
       <button class="copy-btn" id="copyBtn">Kopiuj kod HTML</button>
       <button class="tool-btn" id="copyWordBtn" title="Kopiuje sam tekst (bez zdjęć) z zachowanym formatowaniem — do wklejenia w Wordzie">📄 Kopiuj jako tekst (Word)</button>
       <button class="tool-btn" id="undoBtn" disabled title="Cofnij ostatnie usunięcie (Ctrl+Z)">↶ Cofnij</button>
+      <button class="tool-btn" id="saveTemplateBtn" title="Zapisz obecny opis jako szablon widoczny dla wszystkich">💾 Zapisz jako szablon</button>
       <button class="tool-btn" id="clearAllBtn" title="Usuń zapisaną pracę i zacznij od nowa">🗑 Wyczyść wszystko</button>
       <span id="copyStatus" style="font-size:12.5px;color:#666;"></span>
     </div>
@@ -228,6 +272,10 @@ function splitParagraphsBold(s){
   if(!e) return [];
   e = e.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
   return e.split(/\n\s*\n/).map(function(p){ return p.trim().replace(/\n/g,' '); }).filter(Boolean);
+}
+// dodaje do listy outline widoczny tekst w miejscu, gdzie w kodzie HTML byłoby zdjęcie
+function pushImgMarker(out, label){
+  out.push({role:'imgmarker', text: '[ZDJĘCIE: ' + esc(label) + ']'});
 }
 function ph(id){ return 'PODMIEN-ZDJECIE-' + id + '.jpg'; }
 function imgTag(id, alt, note){
@@ -437,6 +485,7 @@ var TPL_PROSTY = {
     addLine('subheading', v.eyebrow);
     addLine('heading', v.heading);
     addLine('subheading', v.subhead);
+    if(has(v.pack_title) || has(v.pack_p1) || has(v.pack_p2)) pushImgMarker(out, 'oprawa / opakowanie');
     addLine('subheading', v.pack_title);
     addBody(v.pack_p1);
     addBody(v.pack_p2);
@@ -509,6 +558,7 @@ var TPL_DLUGI = {
     addLine('heading', v.heading1);
     addLine('subheading', v.subheading1);
     addBody(v.desc1);
+    if(has(v.pack_title) || has(v.pack_p1) || has(v.pack_p2)) pushImgMarker(out, 'oprawa / opakowanie');
     addLine('subheading', v.pack_title);
     addBody(v.pack_p1);
     addBody(v.pack_p2);
@@ -692,8 +742,11 @@ var TPL_ZAAWANSOWANY = {
     addStat(v.s4_num, v.s4_unit, v.s4_label);
     addLine('subheading', v.detail_eyebrow);
     addLine('heading', v.detail_heading);
+    if(has(v.obverse_title) || has(v.obverse_desc)) pushImgMarker(out, 'zbliżenie AWERSU');
     addLine('subheading', v.obverse_title); addBody(v.obverse_desc);
+    if(has(v.reverse_title) || has(v.reverse_desc)) pushImgMarker(out, 'zbliżenie REWERSU');
     addLine('subheading', v.reverse_title); addBody(v.reverse_desc);
+    if(has(v.heritage_eyebrow) || has(v.heritage_title) || has(v.heritage_p1) || has(v.heritage_p2)) pushImgMarker(out, 'kasetka kolekcjonerska');
     addLine('subheading', v.heritage_eyebrow);
     addLine('heading', v.heritage_title);
     addBody(v.heritage_p1);
@@ -787,6 +840,7 @@ var BLOCK_DEFS = {
     },
     wordOutline: function(v){
       var out = [];
+      if(has(v.title) || has(v.p1) || has(v.p2)) pushImgMarker(out, v.title || 'zdjęcie');
       if(has(v.eyebrow)) out.push({role:'subheading', text: line(v.eyebrow)});
       if(has(v.title)) out.push({role:'heading', text: line(v.title)});
       splitParagraphsBold(v.p1).forEach(function(p){ out.push({role:'body', text: p}); });
@@ -879,8 +933,10 @@ var BLOCK_DEFS = {
       if(has(v.eyebrow)) out.push({role:'subheading', text: line(v.eyebrow)});
       if(has(v.heading)) out.push({role:'heading', text: line(v.heading)});
       if(has(v.sub)) out.push({role:'body', text: line(v.sub)});
+      if(has(v.t1_title) || has(v.t1_desc)) pushImgMarker(out, v.t1_title || 'zdjęcie 1');
       if(has(v.t1_title)) out.push({role:'subheading', text: line(v.t1_title)});
       splitParagraphsBold(v.t1_desc).forEach(function(p){ out.push({role:'body', text: p}); });
+      if(has(v.t2_title) || has(v.t2_desc)) pushImgMarker(out, v.t2_title || 'zdjęcie 2');
       if(has(v.t2_title)) out.push({role:'subheading', text: line(v.t2_title)});
       splitParagraphsBold(v.t2_desc).forEach(function(p){ out.push({role:'body', text: p}); });
       return out;
@@ -976,6 +1032,13 @@ var TEMPLATES = [TPL_PROSTY, TPL_DLUGI, TPL_ZAAWANSOWANY, TPL_WLASNY];
 /* ============================================================
    APLIKACJA
    ============================================================ */
+/* ============================================================
+   WSPÓLNE SZABLONY (Google Sheets + Apps Script)
+   — widoczne dla każdego, kto ma link do strony, bez logowania.
+   Konfiguracja jednorazowa: patrz google-apps-script/README.md
+   ============================================================ */
+var SHEETS_API_URL = ''; // <-- wklej tu adres wdrożonego Web App (Google Apps Script)
+
 var currentTpl = null;
 var values = {};
 var removedFields = new Set(); // resetuje się tylko przez „Wyczyść wszystko” lub zmianę szablonu
@@ -1059,6 +1122,156 @@ function performUndo(){
 function updateUndoBtn(){
   var btn = document.getElementById('undoBtn');
   if(btn) btn.disabled = undoStack.length === 0;
+}
+
+/* ============================================================
+   API — wspólne szablony (Google Sheets + Apps Script)
+   ============================================================ */
+function apiListTemplates(){
+  if(!SHEETS_API_URL) return Promise.resolve(null); // null = brak konfiguracji
+  return fetch(SHEETS_API_URL + '?action=list')
+    .then(function(r){ return r.json(); })
+    .then(function(data){ return (data && data.items) || []; })
+    .catch(function(){ return 'error'; });
+}
+
+function apiSaveTemplate(name, tplId, stateObj){
+  if(!SHEETS_API_URL) return Promise.reject(new Error('not-configured'));
+  return fetch(SHEETS_API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // unika CORS preflight w Apps Script
+    body: JSON.stringify({ action: 'save', name: name, tplId: tplId, state: JSON.stringify(stateObj) })
+  }).then(function(r){ return r.json(); });
+}
+
+function templateTypeName(tplId){
+  var t = TEMPLATES.find(function(x){ return x.id === tplId; });
+  return t ? t.name : tplId;
+}
+
+function renderSavedTemplatesList(items){
+  var status = document.getElementById('savedTemplatesStatus');
+  var list = document.getElementById('savedTemplatesList');
+  list.innerHTML = '';
+
+  if(!SHEETS_API_URL){
+    status.className = 'saved-tpl-status';
+    status.innerHTML = 'Lista współdzielonych szablonów nie jest jeszcze skonfigurowana — patrz <code>google-apps-script/README.md</code> w repozytorium.';
+    return;
+  }
+  if(items === 'error'){
+    status.className = 'saved-tpl-status error';
+    status.textContent = 'Nie udało się połączyć z listą szablonów. Spróbuj odświeżyć.';
+    return;
+  }
+  if(!items || !items.length){
+    status.className = 'saved-tpl-status';
+    status.textContent = 'Brak zapisanych szablonów — bądź pierwszy(-a): uzupełnij opis i kliknij „💾 Zapisz jako szablon”.';
+    return;
+  }
+
+  status.textContent = '';
+  var sorted = items.slice().sort(function(a,b){ return new Date(b.savedAt) - new Date(a.savedAt); });
+  var lastDateKey = null;
+  var dateGroupEl = null;
+
+  sorted.forEach(function(item){
+    var d = new Date(item.savedAt);
+    var dateKey = d.toLocaleDateString('pl-PL', {day:'numeric', month:'long', year:'numeric'});
+    if(dateKey !== lastDateKey){
+      dateGroupEl = document.createElement('div');
+      dateGroupEl.className = 'saved-tpl-date-group';
+      var h4 = document.createElement('h4');
+      h4.textContent = dateKey;
+      dateGroupEl.appendChild(h4);
+      list.appendChild(dateGroupEl);
+      lastDateKey = dateKey;
+    }
+    var row = document.createElement('div');
+    row.className = 'saved-tpl-item';
+    var left = document.createElement('div');
+    left.innerHTML = '<div class="saved-tpl-item-name">' + esc(item.name) + '</div>' +
+      '<div class="saved-tpl-item-meta">' + d.toLocaleTimeString('pl-PL', {hour:'2-digit', minute:'2-digit'}) + '</div>';
+    var badge = document.createElement('span');
+    badge.className = 'saved-tpl-badge';
+    badge.textContent = templateTypeName(item.tplId);
+    row.appendChild(left);
+    row.appendChild(badge);
+    row.addEventListener('click', function(){
+      var parsed;
+      try{ parsed = JSON.parse(item.state); }catch(e){ alert('Nie udało się wczytać tego szablonu.'); return; }
+      pushUndo();
+      applyState(parsed);
+      document.getElementById('restoreBanner').innerHTML = '';
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+    dateGroupEl.appendChild(row);
+  });
+}
+
+function loadSavedTemplatesList(){
+  var status = document.getElementById('savedTemplatesStatus');
+  if(SHEETS_API_URL){ status.className = 'saved-tpl-status'; status.textContent = 'Wczytywanie listy…'; }
+  apiListTemplates().then(renderSavedTemplatesList);
+}
+
+function showSaveTemplateModal(){
+  var overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  var box = document.createElement('div');
+  box.className = 'modal-box';
+  box.innerHTML = '<h3>Zapisz jako szablon</h3><p style="font-size:12.5px;color:#777;margin:0 0 4px;">Szablon będzie widoczny dla wszystkich, którzy mają link do tej strony.</p>';
+  var input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'save-modal-input';
+  input.placeholder = 'np. Moneta Św. Jerzy — wersja PL';
+  box.appendChild(input);
+  var errorMsg = document.createElement('div');
+  errorMsg.style.cssText = 'font-size:12px;color:#c0392b;min-height:16px;margin-top:4px;';
+  box.appendChild(errorMsg);
+
+  var actions = document.createElement('div');
+  actions.className = 'modal-actions';
+  var cancelBtn = document.createElement('button');
+  cancelBtn.className = 'secondary';
+  cancelBtn.textContent = 'Anuluj';
+  cancelBtn.addEventListener('click', function(){ overlay.remove(); });
+  var saveBtn = document.createElement('button');
+  saveBtn.className = 'copy-btn';
+  saveBtn.style.cssText = 'padding:9px 16px;';
+  saveBtn.textContent = 'Zapisz';
+  saveBtn.addEventListener('click', function(){
+    var name = input.value.trim();
+    if(!name){ errorMsg.textContent = 'Podaj nazwę szablonu.'; return; }
+    if(!SHEETS_API_URL){ errorMsg.textContent = 'Wspólne szablony nie są jeszcze skonfigurowane (patrz google-apps-script/README.md).'; return; }
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Zapisywanie…';
+    apiSaveTemplate(name, currentTpl.id, captureState()).then(function(res){
+      if(res && res.ok){
+        overlay.remove();
+        loadSavedTemplatesList();
+        var st = document.getElementById('copyStatus');
+        st.textContent = 'Szablon „' + name + '” zapisany.';
+        setTimeout(function(){ st.textContent = ''; }, 2500);
+      } else {
+        errorMsg.textContent = 'Nie udało się zapisać. Spróbuj ponownie.';
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Zapisz';
+      }
+    }).catch(function(){
+      errorMsg.textContent = 'Nie udało się połączyć. Sprawdź połączenie i spróbuj ponownie.';
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Zapisz';
+    });
+  });
+  actions.appendChild(cancelBtn);
+  actions.appendChild(saveBtn);
+  box.appendChild(actions);
+  overlay.appendChild(box);
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
+  input.focus();
+  input.addEventListener('keydown', function(e){ if(e.key === 'Enter') saveBtn.click(); });
 }
 
 function initPicker(){
@@ -1408,7 +1621,8 @@ function buildWordOutline(){
 var WORD_STYLES = {
   heading: 'font-size:20pt;font-weight:700;margin:0 0 10pt 0;font-family:Calibri,Arial,sans-serif;',
   subheading: 'font-size:14pt;font-weight:700;margin:14pt 0 4pt 0;font-family:Calibri,Arial,sans-serif;',
-  body: 'font-size:11pt;font-weight:400;margin:0 0 8pt 0;line-height:1.4;font-family:Calibri,Arial,sans-serif;'
+  body: 'font-size:11pt;font-weight:400;margin:0 0 8pt 0;line-height:1.4;font-family:Calibri,Arial,sans-serif;',
+  imgmarker: 'font-size:11pt;font-weight:400;font-style:italic;color:#888888;margin:6pt 0;font-family:Calibri,Arial,sans-serif;'
 };
 
 function outlineToHtml(outline){
@@ -1533,6 +1747,8 @@ document.getElementById('copyBtn').addEventListener('click', function(){
 });
 
 document.getElementById('copyWordBtn').addEventListener('click', runCopyWord);
+document.getElementById('saveTemplateBtn').addEventListener('click', showSaveTemplateModal);
+document.getElementById('refreshTplBtn').addEventListener('click', loadSavedTemplatesList);
 document.getElementById('undoBtn').addEventListener('click', performUndo);
 document.addEventListener('keydown', function(e){
   var isUndoCombo = (e.ctrlKey || e.metaKey) && !e.shiftKey && (e.key === 'z' || e.key === 'Z');
@@ -1576,6 +1792,7 @@ if(savedState){
   selectTemplate('prosty');
 }
 updateUndoBtn();
+loadSavedTemplatesList();
 </script>
 
 </body>

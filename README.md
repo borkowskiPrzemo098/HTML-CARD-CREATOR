@@ -36,10 +36,25 @@ te adresy na docelowe linki do zdjęć bezpośrednio w kodzie.
 
 ## Kopiuj jako tekst (Word)
 
-Drugi przycisk obok „Kopiuj kod HTML" — kopiuje sam tekst, **bez zdjęć**,
-z zachowanym formatowaniem (nagłówek / podtytuł-hasło / zwykły tekst,
-różne wielkości i pogrubienia). Po wklejeniu (Ctrl+V) w Wordzie hierarchia
-jest widoczna od razu, bez ręcznego formatowania.
+Drugi przycisk obok „Kopiuj kod HTML" — kopiuje sam tekst, z zachowanym
+formatowaniem (nagłówek / podtytuł-hasło / zwykły tekst, różne wielkości
+i pogrubienia). Po wklejeniu (Ctrl+V) w Wordzie hierarchia jest widoczna
+od razu, bez ręcznego formatowania. Miejsca, gdzie w opisie byłoby zdjęcie,
+są oznaczone widocznym tekstem `[ZDJĘCIE: opis]`.
+
+## Wspólne zapisane szablony
+
+Przycisk **„💾 Zapisz jako szablon"** zapisuje obecny opis (dowolny z 4
+szablonów) pod wybraną nazwą do współdzielonej listy w karcie „Zapisane
+szablony" — widocznej i edytowalnej od razu dla każdego, kto ma link do
+strony, **bez logowania**. Lista jest pogrupowana datami, najnowsze na
+górze. Kliknięcie w pozycję otwiera ten szablon gotowy do dalszej edycji
+(można cofnąć Ctrl+Z, jeśli otworzono przez pomyłkę).
+
+Backend to darmowy Google Apps Script + Arkusz Google — konfiguracja
+jednorazowa, patrz [`google-apps-script/README.md`](./google-apps-script/README.md).
+Dopóki nie zostanie skonfigurowana, strona działa normalnie, a w miejscu
+listy pojawia się informacja o brakującej konfiguracji.
 
 ## Hosting
 
