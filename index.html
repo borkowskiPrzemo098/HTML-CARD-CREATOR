@@ -180,8 +180,14 @@
   .saved-tpl-item-meta { font-size: 11px; color: #999; }
   .saved-tpl-badge {
     font-size: 10.5px; font-weight: 700; color: #b08d4f; background: #fbf6ec; border-radius: 5px;
-    padding: 2px 6px; text-transform: uppercase; letter-spacing: 0.3px; white-space: nowrap;
+    padding: 2px 6px; text-transform: uppercase; letter-spacing: 0.3px; white-space: nowrap; flex-shrink: 0;
   }
+  .saved-tpl-actions { display: flex; gap: 2px; flex-shrink: 0; }
+  .saved-tpl-action-btn {
+    background: none; border: none; cursor: pointer; font-size: 13px; color: #aaa; padding: 4px 6px;
+    border-radius: 5px; line-height: 1;
+  }
+  .saved-tpl-action-btn:hover { background: #eee0c0; color: #7a5c1e; }
 
   .save-modal-input {
     width: 100%; font-size: 14px; padding: 10px 12px; border: 1px solid #d8d6cf; border-radius: 7px;
@@ -1143,23 +1149,37 @@ function apiListTemplates(){
     .catch(function(){ return 'error'; });
 }
 
-function apiSaveTemplate(name, tplId, stateObj){
+// wspólny POST do aktywnego backendu — Vercel dostaje czysty JSON (pełna kontrola CORS/OPTIONS),
+// Google Apps Script dostaje text/plain (unika CORS preflight), a stan zawsze jako string w payloadzie dla Sheets
+function apiPost(payload){
   var url = activeApiUrl();
   if(!url) return Promise.reject(new Error('not-configured'));
   if(usingVercel()){
-    // Vercel: JSON wprost, obiekt stanu bez podwójnego stringify — funkcja ma pełną kontrolę nad CORS/OPTIONS
     return fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'save', name: name, tplId: tplId, state: stateObj })
+      body: JSON.stringify(payload)
     }).then(function(r){ return r.json(); });
   }
-  // Google Apps Script: text/plain, żeby uniknąć CORS preflight; stan jako string w komórce arkusza
+  var sheetsPayload = Object.assign({}, payload);
+  if(sheetsPayload.state !== undefined) sheetsPayload.state = JSON.stringify(sheetsPayload.state);
   return fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ action: 'save', name: name, tplId: tplId, state: JSON.stringify(stateObj) })
+    body: JSON.stringify(sheetsPayload)
   }).then(function(r){ return r.json(); });
+}
+
+function apiSaveTemplate(name, tplId, stateObj){
+  return apiPost({ action: 'save', name: name, tplId: tplId, state: stateObj });
+}
+
+function apiRenameTemplate(id, name){
+  return apiPost({ action: 'rename', id: id, name: name });
+}
+
+function apiDeleteTemplate(id){
+  return apiPost({ action: 'delete', id: id });
 }
 
 // stan zapisany przez Vercel przychodzi jako obiekt, przez Google Sheets jako string JSON w komórce
@@ -1218,8 +1238,31 @@ function renderSavedTemplatesList(items){
     var badge = document.createElement('span');
     badge.className = 'saved-tpl-badge';
     badge.textContent = templateTypeName(item.tplId);
+
+    var actions = document.createElement('div');
+    actions.className = 'saved-tpl-actions';
+    var renameBtn = document.createElement('button');
+    renameBtn.className = 'saved-tpl-action-btn';
+    renameBtn.title = 'Zmień nazwę';
+    renameBtn.textContent = '✎';
+    renameBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      showRenameTemplateModal(item);
+    });
+    var deleteBtn = document.createElement('button');
+    deleteBtn.className = 'saved-tpl-action-btn';
+    deleteBtn.title = 'Usuń szablon';
+    deleteBtn.textContent = '🗑';
+    deleteBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      deleteSavedTemplate(item);
+    });
+    actions.appendChild(renameBtn);
+    actions.appendChild(deleteBtn);
+
     row.appendChild(left);
     row.appendChild(badge);
+    row.appendChild(actions);
     row.addEventListener('click', function(){
       var parsed;
       try{ parsed = parseTemplateState(item.state); }catch(e){ alert('Nie udało się wczytać tego szablonu.'); return; }
@@ -1229,6 +1272,75 @@ function renderSavedTemplatesList(items){
       window.scrollTo({top:0, behavior:'smooth'});
     });
     dateGroupEl.appendChild(row);
+  });
+}
+
+function showRenameTemplateModal(item){
+  var overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  var box = document.createElement('div');
+  box.className = 'modal-box';
+  box.innerHTML = '<h3>Zmień nazwę szablonu</h3>';
+  var input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'save-modal-input';
+  input.value = item.name;
+  box.appendChild(input);
+  var errorMsg = document.createElement('div');
+  errorMsg.style.cssText = 'font-size:12px;color:#c0392b;min-height:16px;margin-top:4px;';
+  box.appendChild(errorMsg);
+
+  var actions = document.createElement('div');
+  actions.className = 'modal-actions';
+  var cancelBtn = document.createElement('button');
+  cancelBtn.className = 'secondary';
+  cancelBtn.textContent = 'Anuluj';
+  cancelBtn.addEventListener('click', function(){ overlay.remove(); });
+  var saveBtn = document.createElement('button');
+  saveBtn.className = 'copy-btn';
+  saveBtn.style.cssText = 'padding:9px 16px;';
+  saveBtn.textContent = 'Zapisz nazwę';
+  saveBtn.addEventListener('click', function(){
+    var name = input.value.trim();
+    if(!name){ errorMsg.textContent = 'Podaj nazwę szablonu.'; return; }
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Zapisywanie…';
+    apiRenameTemplate(item.id, name).then(function(res){
+      if(res && res.ok){
+        overlay.remove();
+        loadSavedTemplatesList();
+      } else {
+        errorMsg.textContent = 'Nie udało się zmienić nazwy. Spróbuj ponownie.';
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Zapisz nazwę';
+      }
+    }).catch(function(){
+      errorMsg.textContent = 'Nie udało się połączyć. Sprawdź połączenie i spróbuj ponownie.';
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Zapisz nazwę';
+    });
+  });
+  actions.appendChild(cancelBtn);
+  actions.appendChild(saveBtn);
+  box.appendChild(actions);
+  overlay.appendChild(box);
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
+  input.focus();
+  input.select();
+  input.addEventListener('keydown', function(e){ if(e.key === 'Enter') saveBtn.click(); });
+}
+
+function deleteSavedTemplate(item){
+  if(!confirm('Usunąć szablon „' + item.name + '”? Tej operacji nie można cofnąć.')) return;
+  apiDeleteTemplate(item.id).then(function(res){
+    if(res && res.ok){
+      loadSavedTemplatesList();
+    } else {
+      alert('Nie udało się usunąć szablonu. Spróbuj ponownie.');
+    }
+  }).catch(function(){
+    alert('Nie udało się połączyć. Sprawdź połączenie i spróbuj ponownie.');
   });
 }
 

@@ -54,6 +54,20 @@ async function writeIndex(items, sha, message) {
   return r.json();
 }
 
+// wykonuje fn (które samo odpowiada przez res), z jednym ponownym podejściem
+// jeśli readIndex/writeIndex trafi na konflikt równoczesnego zapisu (409)
+async function withRetry(fn) {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      await fn();
+      return;
+    } catch (err) {
+      if (attempt === 0 && err.status === 409) continue;
+      throw err;
+    }
+  }
+}
+
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -82,23 +96,47 @@ module.exports = async (req, res) => {
           res.status(400).json({ ok: false, error: 'Brak nazwy lub typu szablonu.' });
           return;
         }
-        var lastErr = null;
-        for (let attempt = 0; attempt < 2; attempt++) {
-          try {
-            const { items, sha } = await readIndex();
-            const id = 'tpl_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-            const savedAt = new Date().toISOString();
-            items.push({ id, name: String(body.name).slice(0, 200), savedAt, tplId: body.tplId, state: body.state });
-            await writeIndex(items, sha, 'Zapisz szablon: ' + body.name);
-            res.status(200).json({ ok: true, id, savedAt });
-            return;
-          } catch (err) {
-            lastErr = err;
-            if (attempt === 0 && err.status === 409) continue; // konflikt zapisu — spróbuj raz jeszcze
-            throw err;
-          }
+        await withRetry(async () => {
+          const { items, sha } = await readIndex();
+          const id = 'tpl_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+          const savedAt = new Date().toISOString();
+          items.push({ id, name: String(body.name).slice(0, 200), savedAt, tplId: body.tplId, state: body.state });
+          await writeIndex(items, sha, 'Zapisz szablon: ' + body.name);
+          res.status(200).json({ ok: true, id, savedAt });
+        });
+        return;
+      }
+
+      if (body.action === 'rename') {
+        if (!body.id || !body.name) {
+          res.status(400).json({ ok: false, error: 'Brak id lub nowej nazwy.' });
+          return;
         }
-        throw lastErr;
+        await withRetry(async () => {
+          const { items, sha } = await readIndex();
+          const item = items.find(function (x) { return x.id === body.id; });
+          if (!item) { res.status(404).json({ ok: false, error: 'Nie znaleziono szablonu.' }); return; }
+          item.name = String(body.name).slice(0, 200);
+          await writeIndex(items, sha, 'Zmień nazwę szablonu: ' + item.name);
+          res.status(200).json({ ok: true });
+        });
+        return;
+      }
+
+      if (body.action === 'delete') {
+        if (!body.id) {
+          res.status(400).json({ ok: false, error: 'Brak id.' });
+          return;
+        }
+        await withRetry(async () => {
+          const { items, sha } = await readIndex();
+          const idx = items.findIndex(function (x) { return x.id === body.id; });
+          if (idx === -1) { res.status(200).json({ ok: true }); return; } // już nie istnieje — nic do zrobienia
+          const removed = items.splice(idx, 1)[0];
+          await writeIndex(items, sha, 'Usuń szablon: ' + removed.name);
+          res.status(200).json({ ok: true });
+        });
+        return;
       }
 
       res.status(400).json({ ok: false, error: 'Nieznana akcja.' });

@@ -51,6 +51,9 @@ strony, **bez logowania**. Lista jest pogrupowana datami, najnowsze na
 górze. Kliknięcie w pozycję otwiera ten szablon gotowy do dalszej edycji
 (można cofnąć Ctrl+Z, jeśli otworzono przez pomyłkę).
 
+Każda pozycja na liście ma ikony **✎** (zmień nazwę) i **🗑** (usuń, z potwierdzeniem) —
+działają natychmiast, bez wchodzenia w edycję samego opisu.
+
 Backend (do wyboru, konfiguracja jednorazowa):
 - **Vercel + GitHub (rekomendowane)** — patrz [`vercel-backend/README.md`](./vercel-backend/README.md).
   Dane trafiają jako commity do pliku `templates/index.json` w tym repo.

@@ -24,6 +24,9 @@ function doPost(e) {
   if (body.action === 'save') {
     return saveTemplate(body);
   }
+  if (body.action === 'rename') {
+    return renameTemplate(body);
+  }
   if (body.action === 'delete') {
     return deleteTemplate(body);
   }
@@ -58,6 +61,18 @@ function saveTemplate(body) {
   var savedAt = new Date().toISOString();
   sheet.appendRow([id, body.name, savedAt, body.tplId, body.state]);
   return jsonResponse({ ok: true, id: id, savedAt: savedAt });
+}
+
+function renameTemplate(body) {
+  var sheet = getSheet_();
+  var data = sheet.getDataRange().getValues();
+  for (var i = 1; i < data.length; i++) {
+    if (data[i][0] === body.id) {
+      sheet.getRange(i + 1, 2).setValue(body.name); // kolumna "name"
+      break;
+    }
+  }
+  return jsonResponse({ ok: true });
 }
 
 function deleteTemplate(body) {
