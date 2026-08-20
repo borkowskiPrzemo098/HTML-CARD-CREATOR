@@ -36,10 +36,22 @@ te adresy na docelowe linki do zdjęć bezpośrednio w kodzie.
 
 ## Sprawdzanie pisowni
 
-Wszystkie pola tekstowe mają wymuszone sprawdzanie pisowni przeglądarki
-z polskim słownikiem (`spellcheck="true" lang="pl"`) — literówki są
-podkreślane na czerwono tak jak w edytorze tekstu. To wbudowana funkcja
-przeglądarki, nic nie jest wysyłane na zewnątrz.
+Dwa niezależne mechanizmy, oba w 100% offline (nic nie jest wysyłane na
+zewnątrz):
+
+1. **Podkreślenia przeglądarki** — wszystkie pola mają wymuszone
+   `spellcheck="true" lang="pl"`, więc przeglądarka podkreśla literówki
+   na czerwono tak jak w edytorze tekstu.
+2. **Ikona ⚠️ przy polu** — własny, lokalny sprawdzacz pisowni
+   ([Typo.js](https://github.com/cfinke/Typo.js) + polski słownik
+   Hunspell z projektu [sjp.pl](http://www.sjp.pl/slownik/en/), pliki
+   w `dictionaries/`). Słownik (~1,3 MB po kompresji) ładuje się raz w tle
+   przy starcie strony; każde pole samo sprawdza swoją treść (z małym
+   opóźnieniem po przestaniu pisać) i pokazuje ⚠️ z listą podejrzanych
+   słów w dymku, jeśli coś nie zgadza się ze słownikiem. Może fałszywie
+   oznaczać nazwy własne/marki, których nie ma w ogólnym słowniku — to
+   normalne dla tego typu narzędzi (tak samo działa w Wordzie).
+   Licencje: [`dictionaries/NOTICE.md`](./dictionaries/NOTICE.md).
 
 ## Kopiuj jako tekst (Word)
 

@@ -48,6 +48,7 @@
 
   .field-row { margin-bottom: 4px; }
   .field-label-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin: 12px 0 5px; }
+  .field-label-left { display: flex; align-items: baseline; gap: 5px; min-width: 0; }
   label { font-size: 12.5px; font-weight: 600; color: #444; margin: 0; }
   label .hint { font-weight: 400; color: #999; font-size: 11px; }
   .field-remove-btn {
@@ -55,6 +56,9 @@
     white-space: nowrap; flex-shrink: 0;
   }
   .field-remove-btn:hover { color: #c0392b; }
+  .field-spell-warning {
+    font-size: 12px; cursor: default; flex-shrink: 0;
+  }
 
   input[type=text], textarea {
     width: 100%; font-family: inherit; font-size: 13.5px; padding: 9px 10px;
@@ -254,6 +258,7 @@
 
 <footer>HTML Card Creator — narzędzie wewnętrzne do generowania opisów produktów</footer>
 
+<script src="lib/typo.js"></script>
 <script>
 /* ============================================================
    HELPERY
@@ -272,6 +277,82 @@ function line(s){
   return esc(s||'').trim().replace(/\n/g,' ');
 }
 function has(s){ return !!(s && String(s).trim()); }
+
+/* ============================================================
+   SPRAWDZANIE PISOWNI — offline, słownik polski (Hunspell/Typo.js).
+   Nic nie jest wysyłane na zewnątrz: słownik ładuje się raz z tego
+   samego serwera co strona i działa lokalnie w przeglądarce.
+   ============================================================ */
+var spellChecker = null;
+var spellCheckerLoading = null;
+
+function initSpellChecker(){
+  if(spellCheckerLoading) return spellCheckerLoading;
+  if(typeof Typo === 'undefined'){ return Promise.resolve(null); }
+  spellCheckerLoading = Promise.all([
+    fetch('dictionaries/pl_PL.aff').then(function(r){ return r.text(); }),
+    fetch('dictionaries/pl_PL.dic').then(function(r){ return r.text(); })
+  ]).then(function(results){
+    spellChecker = new Typo('pl_PL', results[0], results[1]);
+    // odśwież widoczne pola, żeby objąć tekst wpisany zanim słownik zdążył się pobrać
+    if(currentTpl){ renderForm(); }
+    return spellChecker;
+  }).catch(function(err){
+    console.warn('Nie udało się wczytać słownika pisowni:', err);
+    return null;
+  });
+  return spellCheckerLoading;
+}
+
+// zwraca listę słów spoza słownika (literówki) w podanym tekście; pomija pojedyncze litery
+// (spójniki: i, w, z, a...) oraz markdown ** — te znaki i tak nie są literami, więc nie trafiają do wyniku
+function findMisspelledWords(text){
+  if(!spellChecker || !text) return [];
+  var words = text.match(/\p{L}+/gu) || [];
+  var seen = {};
+  var bad = [];
+  words.forEach(function(w){
+    if(w.length < 2) return;
+    if(seen.hasOwnProperty(w)) return;
+    var capitalized = w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+    var ok = spellChecker.check(w) || spellChecker.check(w.toLowerCase()) || spellChecker.check(capitalized);
+    seen[w] = ok;
+    if(!ok) bad.push(w);
+  });
+  return bad;
+}
+
+function makeSpellWarningIcon(){
+  var icon = document.createElement('span');
+  icon.className = 'field-spell-warning';
+  icon.textContent = '⚠️';
+  icon.style.display = 'none';
+  return icon;
+}
+
+// dowiązuje sprawdzanie pisowni do pola: uruchamia się od razu (np. przy wczytaniu
+// zapisanego szablonu) i ponownie z opóźnieniem po każdej zmianie treści
+function wireSpellCheck(input, icon){
+  var timer = null;
+  function run(){
+    initSpellChecker().then(function(){
+      if(!spellChecker) return;
+      var bad = findMisspelledWords(input.value);
+      if(bad.length){
+        icon.style.display = 'inline';
+        icon.title = 'Możliwe literówki: ' + bad.slice(0, 8).join(', ') + (bad.length > 8 ? '…' : '');
+      } else {
+        icon.style.display = 'none';
+        icon.title = '';
+      }
+    });
+  }
+  input.addEventListener('input', function(){
+    clearTimeout(timer);
+    timer = setTimeout(run, 500);
+  });
+  run();
+}
 // jak richText, ale zwraca tablicę akapitów (do budowania osobnych <p> przy eksporcie do Worda)
 function splitParagraphsBold(s){
   var e = esc(s||'').trim();
@@ -1447,9 +1528,14 @@ function fieldsInSection(section){
 function appendFieldInput(parent, fieldDef, getVal, setVal, onRemove){
   var labelRow = document.createElement('div');
   labelRow.className = 'field-label-row';
+  var labelLeft = document.createElement('div');
+  labelLeft.className = 'field-label-left';
   var lbl = document.createElement('label');
   lbl.textContent = fieldDef.label;
-  labelRow.appendChild(lbl);
+  labelLeft.appendChild(lbl);
+  var warnIcon = makeSpellWarningIcon();
+  labelLeft.appendChild(warnIcon);
+  labelRow.appendChild(labelLeft);
   if(onRemove){
     var removeBtn = document.createElement('button');
     removeBtn.className = 'field-remove-btn';
@@ -1466,6 +1552,7 @@ function appendFieldInput(parent, fieldDef, getVal, setVal, onRemove){
   input.lang = 'pl';
   input.value = getVal() || '';
   input.addEventListener('input', function(){ setVal(input.value); });
+  wireSpellCheck(input, warnIcon);
   parent.appendChild(input);
 }
 
@@ -1535,9 +1622,14 @@ function renderForm(){
 
       var labelRow = document.createElement('div');
       labelRow.className = 'field-label-row';
+      var labelLeft = document.createElement('div');
+      labelLeft.className = 'field-label-left';
       var lbl = document.createElement('label');
       lbl.textContent = f.label;
-      labelRow.appendChild(lbl);
+      labelLeft.appendChild(lbl);
+      var warnIcon = makeSpellWarningIcon();
+      labelLeft.appendChild(warnIcon);
+      labelRow.appendChild(labelLeft);
       var removeBtn = document.createElement('button');
       removeBtn.className = 'field-remove-btn';
       removeBtn.textContent = '✕ usuń';
@@ -1561,6 +1653,7 @@ function renderForm(){
       input.spellcheck = true;
       input.lang = 'pl';
       input.value = values[f.key] || '';
+      wireSpellCheck(input, warnIcon);
       input.addEventListener('input', function(){
         values[f.key] = input.value;
         renderPreview();
@@ -1936,6 +2029,7 @@ if(savedState){
 }
 updateUndoBtn();
 loadSavedTemplatesList();
+initSpellChecker(); // wczytaj słownik w tle, żeby był gotowy zanim ktoś zacznie pisać
 </script>
 
 </body>
