@@ -34,6 +34,13 @@ te adresy na docelowe linki do zdjęć bezpośrednio w kodzie.
   zdjęć do podmiany w kodzie oraz ostrzeżenia o polach z niezmienionym
   przykładowym tekstem szablonu — można poprawić albo skopiować mimo to.
 
+## Sprawdzanie pisowni
+
+Wszystkie pola tekstowe mają wymuszone sprawdzanie pisowni przeglądarki
+z polskim słownikiem (`spellcheck="true" lang="pl"`) — literówki są
+podkreślane na czerwono tak jak w edytorze tekstu. To wbudowana funkcja
+przeglądarki, nic nie jest wysyłane na zewnątrz.
+
 ## Kopiuj jako tekst (Word)
 
 Drugi przycisk obok „Kopiuj kod HTML" — kopiuje sam tekst, z zachowanym

@@ -1284,6 +1284,8 @@ function showRenameTemplateModal(item){
   var input = document.createElement('input');
   input.type = 'text';
   input.className = 'save-modal-input';
+  input.spellcheck = true;
+  input.lang = 'pl';
   input.value = item.name;
   box.appendChild(input);
   var errorMsg = document.createElement('div');
@@ -1359,6 +1361,8 @@ function showSaveTemplateModal(){
   var input = document.createElement('input');
   input.type = 'text';
   input.className = 'save-modal-input';
+  input.spellcheck = true;
+  input.lang = 'pl';
   input.placeholder = 'np. Moneta Św. Jerzy — wersja PL';
   box.appendChild(input);
   var errorMsg = document.createElement('div');
@@ -1458,6 +1462,8 @@ function appendFieldInput(parent, fieldDef, getVal, setVal, onRemove){
 
   var input = fieldDef.type === 'textarea' ? document.createElement('textarea') : document.createElement('input');
   if(fieldDef.type !== 'textarea') input.type = 'text';
+  input.spellcheck = true;
+  input.lang = 'pl';
   input.value = getVal() || '';
   input.addEventListener('input', function(){ setVal(input.value); });
   parent.appendChild(input);
@@ -1552,6 +1558,8 @@ function renderForm(){
         input = document.createElement('input');
         input.type = 'text';
       }
+      input.spellcheck = true;
+      input.lang = 'pl';
       input.value = values[f.key] || '';
       input.addEventListener('input', function(){
         values[f.key] = input.value;
