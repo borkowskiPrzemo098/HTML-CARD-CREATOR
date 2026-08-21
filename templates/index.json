@@ -258,5 +258,114 @@
       ],
       "blockIdSeq": 15
     }
+  },
+  {
+    "id": "tpl_mt2rmigpciwgar",
+    "name": "Krucyfiks - 2026 - gotowa karta",
+    "savedAt": "2026-08-21T09:47:10.201Z",
+    "tplId": "wlasny",
+    "state": {
+      "tplId": "wlasny",
+      "values": {},
+      "removed": [],
+      "customBlocks": [
+        {
+          "id": 5,
+          "type": "text",
+          "values": {
+            "eyebrow": "CZARNY KRUCYFIKS",
+            "heading": "Spektakularna interpretacja wawelskiego arcydzieła",
+            "body": "Jedno z najbardziej poruszających dzieł sztuki sakralnej, kryjących się w wawelskiej katedrze, stało się inspiracją dla niezwykłej emisji poświęconej postaci Jezusa Chrystusa. Jej centralny motyw nawiązuje do Czarnego Krucyfiksu, tradycyjnie związanego z królową Jadwigą i od wieków otaczanego kultem.\n\nGotycka rzeźba Chrystusa powstała około 1380 roku, prawdopodobnie w Czechach lub na Węgrzech. Jak głosi przekaz, Jadwiga sprowadziła ją z Węgier do Polski około 1384 roku. U stóp Ukrzyżowanego królowa miała modlić się o mądrość potrzebną do sprawowania władzy. Po jej śmierci w 1399 roku miejsce to stało się również ośrodkiem kultu królowej, a pamięć o niej i modlitwa przed krucyfiksem przetrwały kolejne stulecia."
+          }
+        },
+        {
+          "id": 6,
+          "type": "stats",
+          "values": {
+            "s1_num": "1/2",
+            "s1_unit": "uncji",
+            "s1_label": "czyste srebro",
+            "s2_num": "101,1",
+            "s2_unit": "x 66,4 mm",
+            "s2_label": "WYMIARY",
+            "s3_num": "999",
+            "s3_unit": "",
+            "s3_label": "ŚWIATOWY NAKŁAD",
+            "s4_num": "RELIEF",
+            "s4_unit": "",
+            "s4_label": "BARDZO WYSOKI"
+          }
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "values": {
+            "eyebrow": "LEGENDA",
+            "heading": "Krucyfiks, który przemówił",
+            "body": "Z Czarnym Krucyfiksem związana jest jedna z najbardziej przejmujących wawelskich legend. Gdy Jadwiga stanęła przed trudną decyzją dotyczącą małżeństwa z Władysławem Jagiełłą, modliła się przed Ukrzyżowanym prosząc o wskazanie właściwej drogi. Wówczas Chrystus miał do niej przemówić i skłonić do poświęcenia osobistego szczęścia dla dobra kraju.\n\nZ czasem krzyżowi królowej zaczęto przypisywać cudowne właściwości i liczne łaski, a modlitwy wiernych za wstawiennictwem Jadwigi miały być wysłuchiwane. Już na początku XVII wieku określano go jako cudowny, a tradycja żywej wiary w jego niezwykłą moc przetrwała do dziś."
+          }
+        },
+        {
+          "id": 7,
+          "type": "packaging",
+          "values": {
+            "eyebrow": "PROJEKT",
+            "title": "Gotycka forma w menniczej interpretacji",
+            "p1": "Charakterystyczna sylwetka Ukrzyżowanego – z pochyloną głową, opuszczonymi ramionami i pełnym cierpienia obliczem – stała się punktem wyjścia dla współczesnej interpretacji. Postać Chrystusa ukazano w wysokim reliefie, nadając jej niemal rzeźbiarską przestrzenność.",
+            "p2": "Bogato zdobione tło, łukowate wycięcie przypominające gotyckie okno oraz kwiatowy ornament tworzą kunsztowną oprawę dla centralnego motywu. Całość utrzymano w sugestywnej czarno-srebrnej tonacji. Zestawienie jasnych i ciemnych powierzchni wzmacnia dramaturgię, a światło odbijające się od reliefu wydobywa jego głębię i najdrobniejsze detale."
+          }
+        },
+        {
+          "id": 10,
+          "type": "statement",
+          "values": {
+            "eyebrow": "WIELKOŚĆ I KSZTAŁT",
+            "text": "Imponujące wymiary 101,1 × 66,4 mm oraz nieregularny, wydłużony kształt sprawiają, że emisja przywodzi na myśl kunsztowną płaskorzeźbę, daleko wykraczając poza skalę tradycyjnej monety.",
+            "signature": ""
+          }
+        },
+        {
+          "id": 11,
+          "type": "text",
+          "values": {
+            "eyebrow": "MATERIAŁY",
+            "heading": "Czyste srebro i biały mosiądz",
+            "body": "Za charakterystyczny wygląd unikalnego wydania odpowiada połączenie dwóch metali. Figurę Chrystusa wykonano ze srebra próby 999 o wadze 1/2 uncji, czyli 15,55 g, natomiast oprawa rzeźby, będąca płaszczyzną monety, powstała z litego białego mosiądzu o masie 122 g. Zestawienie szlachetnego kruszcu w ciemnym wykończeniu z jasnym, srebrzystobiałym stopem pozwoliło uzyskać efektowną grę barw, faktur i światła. Srebrny element przyciąga wzrok subtelnym blaskiem, podczas gdy biały mosiądz nadaje całości majestatyczny format i pełen dostojeństwa charakter. "
+          }
+        },
+        {
+          "id": 12,
+          "type": "packaging",
+          "values": {
+            "eyebrow": "PREZENTACJA",
+            "title": "Limitowana emisja",
+            "p1": "Moneta stanowi oficjalny środek płatniczy o nominale 1000 franków CFA. Emisja została objęta ścisłym, globalnym limitem wynoszącym zaledwie 999 egzemplarzy. Każdy z nich dostarczany jest w eleganckim pudełku wraz z certyfikatem autentyczności. ",
+            "p2": "Bogate w treści dzieło sztuki menniczej, stanowiące współczesną interpretację wawelskiego wizerunku Jezusa Ukrzyżowanego, będzie szlachetną ozdobą każdej kolekcji o tematyce religijnej oraz unikalnym upominkiem o trwałej wartości."
+          }
+        },
+        {
+          "id": 13,
+          "type": "text",
+          "values": {
+            "eyebrow": "TRADYCJA ",
+            "heading": "Wawelskie dziedzictwo",
+            "body": "Spektakularna edycja Czarny Krucyfiks to spotkanie wielowiekowej tradycji z nowoczesnym kunsztem menniczym. To hołd dla jednego z najcenniejszych elementów duchowego dziedzictwa Wawelu oraz współczesna interpretacja dzieła sztuki sakralnej, którego historia od ponad sześciu stuleci splata się z dziejami Polski."
+          }
+        },
+        {
+          "id": 14,
+          "type": "trust",
+          "values": {
+            "t1_t": "CERTYFIKAT AUTENTYCZNOŚCI",
+            "t1_d": "Każdy egzemplarz posiada indywidualny certyfikat autentyczności.",
+            "t2_t": "ELEGANCKA KASETKA",
+            "t2_d": "Moneta spoczywa w kolekcjonerskiej kasetce, gotowej do prezentacji numizmatu oraz do jego przechowywania.",
+            "t3_t": "ŚCISŁA LIMITACJA",
+            "t3_d": "Światowy nakład ograniczony jest do zaledwie 999 egzemplarzy."
+          }
+        }
+      ],
+      "blockIdSeq": 15
+    }
   }
 ]
