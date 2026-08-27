@@ -339,5 +339,63 @@
       ],
       "blockIdSeq": 15
     }
+  },
+  {
+    "id": "tpl_mtbbfrl18in0ae",
+    "name": "Sommer-Launch 2026 - SZABLON",
+    "savedAt": "2026-08-27T09:23:57.157Z",
+    "tplId": "wlasny",
+    "state": {
+      "tplId": "wlasny",
+      "values": {},
+      "removed": [],
+      "customBlocks": [
+        {
+          "id": 15,
+          "type": "header",
+          "values": {
+            "eyebrow": "Ikoniczne Monety – Reinterpretacja · 2025",
+            "heading": "Święty Jerzy i Smok",
+            "subhead": "Spektakularna miedziana moneta to współczesna odsłona jednej z najbardziej rozpoznawalnych scen w historii sztuki medalierskiej — Świętego Jerzego na koniu, przebijającego smoka opuszczoną włócznią. Wysoki relief i lustrzane wykończenie prooflike nadają kompozycji wyjątkową głębię, a ciepły, szlachetny odcień miedzi doskonale eksponuje każdy detal motywu."
+          }
+        },
+        {
+          "id": 16,
+          "type": "gallery2",
+          "values": {
+            "eyebrow": "Detal",
+            "heading": "Awers i rewers",
+            "sub": "Najedź kursorem, by zobaczyć więcej.",
+            "t1_title": "Awers — Karol III",
+            "t1_desc": "Podobizna króla Karola III, napisy REPUBLIC OF GHANA, CHARLES III, 5 CEDIS 2025, otoczone 208 perełkami symbolizującymi lata od 1817 roku do 2025",
+            "t2_title": "Rewers — Święty Jerzy i Smok",
+            "t2_desc": "Wysoki relief, wykończenie prooflike, dynamiczna scena walki, emblemat nawiązujący do monety z 1817 roku, oznaczenie 999 5 oz Cu oraz rok emisji 2025"
+          }
+        },
+        {
+          "id": 17,
+          "type": "packaging",
+          "values": {
+            "eyebrow": "Prezentacja",
+            "title": "Od Złotego Suwerena do współczesnej reinterpretacji",
+            "p1": "Słynna złota moneta typu Suweren, ozdobiona ikonicznym projektem Benedetto Pistrucciego przedstawiającym św. Jerzego w walce ze smokiem, zadebiutowała w 1817 roku za panowania króla Jerzego III — z charakterystycznym złamanym drzewcem włóczni.",
+            "p2": "Emisja 2025 w miedzi stanowi część serii Coin Icons Reimagined, prezentującej współczesne interpretacje najbardziej kultowych motywów światowej numizmatyki. Każdy egzemplarz spoczywa w eleganckiej kasetce kolekcjonerskiej wraz z certyfikatem autentyczności."
+          }
+        },
+        {
+          "id": 18,
+          "type": "trust",
+          "values": {
+            "t1_t": "Certyfikat autentyczności",
+            "t1_d": "Każdy egzemplarz posiada indywidualny certyfikat autentyczności.",
+            "t2_t": "Elegancka kasetka",
+            "t2_d": "Moneta spoczywa w kolekcjonerskiej kasetce, gotowej do prezentacji i długotrwałego przechowywania.",
+            "t3_t": "Ścisła limitacja",
+            "t3_d": "Światowy nakład ograniczony jest do zaledwie 1 500 egzemplarzy."
+          }
+        }
+      ],
+      "blockIdSeq": 19
+    }
   }
 ]
