@@ -1147,5 +1147,125 @@
       ],
       "blockIdSeq": 15
     }
+  },
+  {
+    "id": "tpl_mtilq8ao1jy0sn",
+    "name": "Topografia - Bryce Canyon Utah - GOTOWY",
+    "savedAt": "2026-09-01T11:46:24.768Z",
+    "tplId": "dlugi",
+    "state": {
+      "tplId": "dlugi",
+      "values": {
+        "eyebrow1": "ETOS RYCERSKI",
+        "heading1": "Blask zwycięstwa i chwały zamknięty w czystym srebrze",
+        "subheading1": "Legenda Wilhelma Marshala utrwalona w serii monet kolekcjonerskich – edycja 1",
+        "desc1": "Wilhelm Marshal (ang. William Marshal, fr. Guillaume le Maréchal; 1147–1219) uważany jest za jednego z najwybitniejszych rycerzy średniowiecza. Anglo-normandzki wojownik i mąż stanu wsławił się niezliczonymi zwycięstwami w turniejach. Fascynująca seria monet kolekcjonerskich prezentuje losy człowieka, który jak nikt inny ucieleśniał etos rycerski: odwagę, honor i lojalność.\n",
+        "pack_title": "Oprawa godna kolekcjonera",
+        "pack_p1": "Efektowna srebrna moneta spoczywa w eleganckiej, specjalnie zaprojektowanej kasecie kolekcjonerskiej i towarzyszy jej certyfikat autentyczności.",
+        "pack_p2": "",
+        "eyebrow2": "MONETA",
+        "heading2": "Średniowieczny turniej oczami największego z rycerzy",
+        "desc2": "Pierwsza emisja trzyczęściowego cyklu numizmatycznego przedstawia Marshala podczas pojedynku na kopie (ang. jousting) ukazanego z własnej perspektywy jeźdźca – przez wizjer rycerskiego hełmu. Na przyłbicy widnieje XIII-wieczny herb rodu Pembroke oraz krzyż zakonu templariuszy, do którego należał Marshal. Wklęsły rewers potęguje dynamikę sceny batalistycznej, oddając tempo, napięcie oraz dramatyzm turniejowych zmagań. Najdrobniejsze detale pancerzy, broni oraz wiwatującego tłumu nadają całemu motywowi niezwykle realistyczny wyraz. Awers monety przedstawia zwycięzcę składającego ukłon przed trybuną honorową po wygranej walce, zgodnie z turniejowym obyczajem. Na otoku, przy rancie monety umieszczono mikrodrukiem jego oficjalny tytuł. \n\n“Rycerska” srebrna emisja została wydana w ściśle limitowanym nakładzie  **zaledwie 750 egzemplarzy ** na całym świecie. Odkryj żywą historię i weź w dłonie legendę o Wilhelmie Marshalu – największym rycerzu wszech czasów.\n"
+      },
+      "removed": [],
+      "customBlocks": [
+        {
+          "id": 5,
+          "type": "text",
+          "values": {
+            "eyebrow": "majestatyczna interpretacja wawelskiego arcydzieła",
+            "heading": "Wawelski Czarny Krucyfiks",
+            "body": "Jedno z najbardziej poruszających dzieł sztuki sakralnej katedry wawelskiej stało się inspiracją dla niezwykłej emisji poświęconej postaci Jezusa Chrystusa. Jej centralny motyw nawiązuje do Czarnego Krucyfiksu, otaczanego kultem od stuleci i tradycyjnie związanego z królową Jadwigą.\n\nGotycka rzeźba Chrystusa powstała około 1380 roku, prawdopodobnie w Czechach lub na Węgrzech. Jak głosi przekaz, Jadwiga sprowadziła ją z Węgier do Polski około 1384 roku. U stóp Ukrzyżowanego królowa miała modlić się o mądrość potrzebną do sprawowania władzy. Po jej śmierci w 1399 roku miejsce to stało się również ośrodkiem kultu królowej, a pamięć o niej i modlitwa przed krucyfiksem przetrwały kolejne stulecia."
+          }
+        },
+        {
+          "id": 6,
+          "type": "stats",
+          "values": {
+            "s1_num": "1/2",
+            "s1_unit": "uncji",
+            "s1_label": "czyste srebro",
+            "s2_num": "101,1",
+            "s2_unit": "x 66,4 mm",
+            "s2_label": "MAJESTATYCZNE WYMIAY",
+            "s3_num": "999",
+            "s3_unit": "",
+            "s3_label": "ŚWIATOWY NAKŁAD",
+            "s4_num": "RELIEF",
+            "s4_unit": "",
+            "s4_label": "BARDZO WYSOKI"
+          }
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "values": {
+            "eyebrow": "LEGENDA",
+            "heading": "Krucyfiks, który miał przemówić",
+            "body": "Z Czarnym Krucyfiksem związana jest jedna z najbardziej przejmujących wawelskich legend. Gdy Jadwiga stanęła przed trudną decyzją dotyczącą małżeństwa z Władysławem Jagiełłą, modliła się przed Ukrzyżowanym, prosząc o wskazanie właściwej drogi. Wówczas Chrystus miał przemówić do niej i skłonić ją do poświęcenia osobistego szczęścia dla dobra kraju.\n\nZ czasem krucyfiksowi zaczęto przypisywać cudowne właściwości i liczne łaski, a modlitwy wiernych za wstawiennictwem Jadwigi miały być wysłuchiwane. Już na początku XVII wieku określano go jako cudowny, a tradycja jego niezwykłej mocy przetrwała do dziś."
+          }
+        },
+        {
+          "id": 7,
+          "type": "packaging",
+          "values": {
+            "eyebrow": "Detal",
+            "title": "Gotycka forma w menniczej interpretacji",
+            "p1": "Charakterystyczna sylwetka Ukrzyżowanego – z pochyloną głową, opuszczonymi ramionami i pełnym cierpienia obliczem – stała się punktem wyjścia dla współczesnej interpretacji. Postać Chrystusa ukazano w wysokim reliefie, nadając jej niemal rzeźbiarską przestrzenność.",
+            "p2": "Bogato zdobione tło, łukowate wycięcie przypominające gotyckie okno oraz kwiatowy ornament tworzą kunsztowną oprawę dla centralnego motywu. Całość utrzymano w sugestywnej czarno-srebrnej tonacji. Zestawienie jasnych i ciemnych powierzchni wzmacnia dramaturgię, a światło odbijające się od reliefu wydobywa jego głębię i najdrobniejsze detale."
+          }
+        },
+        {
+          "id": 10,
+          "type": "statement",
+          "values": {
+            "eyebrow": "WIELKOŚĆ I KSZTAŁT",
+            "text": "Imponujące wymiary 101,1 × 66,4 mm oraz nieregularny, wydłużony kształt sprawiają, że emisja przywodzi na myśl kunsztowną płaskorzeźbę, daleko wykraczając poza skalę tradycyjnej monety.",
+            "signature": ""
+          }
+        },
+        {
+          "id": 11,
+          "type": "text",
+          "values": {
+            "eyebrow": "METALE",
+            "heading": "Czyste srebro i biały mosiądz",
+            "body": "Za charakterystyczny wygląd odpowiada połączenie dwóch metali. Centralny element wykonano ze srebra próby .999 o masie 1/2 uncji, czyli 15,55 g, natomiast korpus powstał z litego białego mosiądzu o masie 122 g.\n\nZestawienie szlachetnego kruszcu z jasnym, kontrastującym metalem pozwoliło uzyskać efektowną grę barw, faktur i światła. Srebrny element przyciąga wzrok subtelnym blaskiem, podczas gdy biały mosiądz nadaje całości odpowiednią skalę i monumentalny charakter.\n"
+          }
+        },
+        {
+          "id": 12,
+          "type": "packaging",
+          "values": {
+            "eyebrow": "PREZENTACJA",
+            "title": "Limitowana emisja",
+            "p1": "Numizmat jest oficjalną monetą Republiki Kamerunu o nominale 1000 franków CFA, datowaną na 2025 rok. Wybito go w limitowanym nakładzie zaledwie 999 egzemplarzy, wykończenie Prooflike dodatkowo podkreśla kontrast pomiędzy gładkimi powierzchniami a misternie modelowanym reliefem.",
+            "p2": ""
+          }
+        },
+        {
+          "id": 13,
+          "type": "text",
+          "values": {
+            "eyebrow": "TRADYCJA i KUNSZT",
+            "heading": "Wawelskie dziedzictwo",
+            "body": "Czarny Krucyfiks to spotkanie wielowiekowej tradycji z nowoczesnym kunsztem menniczym. Wizerunek Chrystusa, przed którym według tradycji modliła się św. Jadwiga, otrzymał tu monumentalną, przestrzenną oprawę, w której srebro i biały mosiądz tworzą sugestywną grę światła, faktur i kontrastów.\n\nTo zarazem hołd dla jednego z najcenniejszych elementów duchowego dziedzictwa Wawelu oraz współczesna interpretacja dzieła, którego historia od ponad sześciu stuleci splata się z dziejami Polski.\n"
+          }
+        },
+        {
+          "id": 14,
+          "type": "trust",
+          "values": {
+            "t1_t": "CERTYFIKAT",
+            "t1_d": "",
+            "t2_t": "PUDEŁKO",
+            "t2_d": "",
+            "t3_t": "LIMITACJA",
+            "t3_d": ""
+          }
+        }
+      ],
+      "blockIdSeq": 15
+    }
   }
 ]
