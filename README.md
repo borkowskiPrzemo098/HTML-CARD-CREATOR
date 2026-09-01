@@ -21,6 +21,12 @@ te adresy na docelowe linki do zdjęć bezpośrednio w kodzie.
 - Pusta linia w polu tekstowym = nowy akapit (`<br><br>`).
 - `**tekst**` = pogrubienie (`<b>tekst</b>`).
 
+## Wariant szablonu DŁUGI — zdjęcia Awers/Rewers
+
+Kliknięcie kafelka **DŁUGI** pokazuje wybór wariantu: **Klasyczny** albo
+**Ze zdjęciami Awers/Rewers** — ten drugi ma dodatkowo galerię zbliżeń
+(z szablonu ZAAWANSOWANY) wstawioną przed sekcją „Oprawa" / „Prezentacja".
+
 ## Zapis roboczy, walidacja i cofanie
 
 - **Autozapis**: treść zapisuje się na bieżąco w tej przeglądarce (localStorage).

@@ -169,6 +169,7 @@
 
   .saved-tpl-status { font-size: 12.5px; color: #999; padding: 4px 0; }
   .saved-tpl-status.error { color: #c0392b; }
+  #savedTemplatesList { max-height: 340px; overflow-y: auto; padding-right: 4px; }
   .saved-tpl-date-group { margin-bottom: 6px; }
   .saved-tpl-date-group h4 {
     font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #b08d4f;
@@ -429,6 +430,26 @@ var CSS_PROSTY_DLUGI = `
     }
   `;
 
+// CSS_PROSTY_DLUGI + fragment galerii zbliżeń (Awers/Rewers) z CSS_ZAAWANSOWANY,
+// do wariantu DŁUGI-ZDJĘCIA-A/R
+var CSS_DLUGI_ZDJECIA = CSS_PROSTY_DLUGI + `
+    .zn-wrap .zn-closeup-grid { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 30px; }
+    .zn-wrap .zn-closeup-tile { position: relative; flex: 1 1 300px; height: 380px; border-radius: 16px; overflow: hidden; background: #111; cursor: pointer; }
+    .zn-wrap .zn-closeup-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.1s cubic-bezier(.16,1,.3,1), filter 1.1s ease; filter: brightness(0.92) saturate(1.05); }
+    .zn-wrap .zn-closeup-tile:hover img { transform: scale(1.09); filter: brightness(1.02) saturate(1.15); }
+    .zn-wrap .zn-closeup-tile::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,12,0.78) 20%, rgba(10,10,12,0.15) 50%, rgba(10,10,12,0) 65%); z-index: 1; pointer-events: none; }
+    .zn-wrap .zn-closeup-tile::after { content: ""; position: absolute; top: -20%; left: -60%; width: 45%; height: 140%; background: linear-gradient(75deg, transparent 0%, rgba(231,211,160,0) 35%, rgba(231,211,160,0.55) 50%, rgba(231,211,160,0) 65%, transparent 100%); transform: translateX(-40%); transition: transform 1.15s cubic-bezier(.22,.85,.32,1); z-index: 2; pointer-events: none; }
+    .zn-wrap .zn-closeup-tile:hover::after { transform: translateX(340%); }
+    .zn-wrap .zn-closeup-caption { position: absolute; left: 24px; right: 24px; bottom: 22px; z-index: 3; color: #ffffff !important; }
+    .zn-wrap .zn-closeup-caption .zn-closeup-rule { width: 22px; height: 1.5px; background: var(--zn-gold); margin-bottom: 10px; transition: width 0.5s ease; }
+    .zn-wrap .zn-closeup-tile:hover .zn-closeup-rule { width: 40px; }
+    .zn-wrap .zn-closeup-caption strong { display: block; font-family: 'Playfair Display', Georgia, serif !important; font-weight: 500; font-size: 19px; color: #ffffff !important; margin-bottom: 4px; }
+    .zn-wrap .zn-closeup-caption span { font-size: 13.5px; font-weight: 300; color: rgba(255,255,255,0.85) !important; letter-spacing: 0.3px; }
+    @media (max-width: 680px) {
+      .zn-wrap .zn-closeup-tile { height: 300px; flex: 1 1 100%; }
+    }
+  `;
+
 var CSS_ZAAWANSOWANY = `
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap');
     .zn-wrap { max-width: 1000px; margin: 0 auto; font-family: 'Inter', Arial, Helvetica, sans-serif; color: #1a1a1a; -webkit-font-smoothing: antialiased; }
@@ -645,6 +666,117 @@ var TPL_DLUGI = {
     addLine('heading', v.heading1);
     addLine('subheading', v.subheading1);
     addBody(v.desc1);
+    if(has(v.pack_title) || has(v.pack_p1) || has(v.pack_p2)) pushImgMarker(out, 'oprawa / opakowanie');
+    addLine('subheading', v.pack_title);
+    addBody(v.pack_p1);
+    addBody(v.pack_p2);
+    addLine('subheading', v.eyebrow2);
+    addLine('heading', v.heading2);
+    addBody(v.desc2);
+    return out;
+  }
+};
+
+/* ============================================================
+   SZABLON: DŁUGI-ZDJĘCIA-A/R
+   — wariant DŁUGI z dodaną galerią zbliżeń Awers/Rewers
+   (z szablonu ZAAWANSOWANY) nad sekcją "Oprawa" / "Prezentacja".
+   ============================================================ */
+var TPL_DLUGI_ZDJECIA = {
+  id: 'dlugi-zdjecia', name: 'DŁUGI — zdjęcia A/R', desc: 'jak DŁUGI, plus galeria zbliżeń Awers/Rewers przed Oprawą',
+  fields: [
+    {key:'eyebrow1', label:'Nadtytuł', type:'text', section:'Sekcja 1 — wprowadzenie', def:'MISTRZOWIE MALARSTWA'},
+    {key:'heading1', label:'Nagłówek', type:'text', def:'Sztuka wielkiego formatu w miniaturowym majstersztyku'},
+    {key:'subheading1', label:'Podtytuł (mniejszy, pod nagłówkiem)', type:'text', def:'Złota emisja kolekcjonerska zainspirowana arcydziełem malarstwa...'},
+    {key:'desc1', label:'Opis (możesz wkleić kilka akapitów — rozdziel je pustą linią; **tekst** pogrubi fragment)', type:'textarea', def:''},
+
+    {key:'detail_eyebrow', label:'Nadtytuł', type:'text', section:'Galeria zbliżeń (Awers / Rewers)', def:'Detal'},
+    {key:'detail_heading', label:'Nagłówek', type:'text', def:'Awers i rewers'},
+    {key:'detail_sub', label:'Krótka wskazówka pod nagłówkiem', type:'text', def:'Najedź kursorem, by zobaczyć więcej.'},
+    {key:'obverse_title', label:'Tytuł kafla 1 (Awers)', type:'text', def:'Awers'},
+    {key:'obverse_desc', label:'Opis kafla 1', type:'textarea', def:''},
+    {key:'reverse_title', label:'Tytuł kafla 2 (Rewers)', type:'text', def:'Rewers'},
+    {key:'reverse_desc', label:'Opis kafla 2', type:'textarea', def:''},
+
+    {key:'pack_title', label:'Tytuł sekcji "Oprawa"', type:'text', section:'Oprawa / opakowanie (zdjęcie podmienisz później w kodzie)', def:'Oprawa godna kolekcjonera'},
+    {key:'pack_p1', label:'Akapit 1', type:'textarea', def:''},
+    {key:'pack_p2', label:'Akapit 2', type:'textarea', def:''},
+
+    {key:'eyebrow2', label:'Nadtytuł', type:'text', section:'Sekcja 2 — historia / kontekst', def:'ORYGINAŁ'},
+    {key:'heading2', label:'Nagłówek', type:'text', def:''},
+    {key:'desc2', label:'Opis (kilka akapitów — rozdziel pustą linią)', type:'textarea', def:''}
+  ],
+  render: function(v){
+    var section1 = tag(has(v.eyebrow1), `<div class="zn-eyebrow">${line(v.eyebrow1)}</div>\n  `) +
+                   tag(has(v.heading1), `<div class="zn-heading zn-serif">${line(v.heading1)}</div>\n  `) +
+                   tag(has(v.subheading1), `<h3>${line(v.subheading1)}</h3>\n\n  `) +
+                   tag(has(v.desc1), `<p class="zn-subhead">${richText(v.desc1)}</p>`);
+    section1 = section1.trim();
+
+    var closeupHeading = tag(has(v.detail_eyebrow), `<div class="zn-eyebrow">${line(v.detail_eyebrow)}</div>\n  `) +
+                          tag(has(v.detail_heading), `<div class="zn-heading zn-serif">${line(v.detail_heading)}</div>\n  `) +
+                          tag(has(v.detail_sub), `<p class="zn-subhead">${line(v.detail_sub)}</p>`);
+    closeupHeading = closeupHeading.trim();
+
+    var tileObverse = (has(v.obverse_title) || has(v.obverse_desc)) ? `<div class="zn-closeup-tile">
+      ${imgTag(2, v.obverse_title || 'Awers', 'zbliżenie AWERSU')}
+      <div class="zn-closeup-caption">
+        <div class="zn-closeup-rule"></div>
+        ${tag(has(v.obverse_title), `<strong>${line(v.obverse_title)}</strong>`)}
+        ${tag(has(v.obverse_desc), `<span>${richText(v.obverse_desc)}</span>`)}
+      </div>
+    </div>` : '';
+    var tileReverse = (has(v.reverse_title) || has(v.reverse_desc)) ? `<div class="zn-closeup-tile">
+      ${imgTag(3, v.reverse_title || 'Rewers', 'zbliżenie REWERSU')}
+      <div class="zn-closeup-caption">
+        <div class="zn-closeup-rule"></div>
+        ${tag(has(v.reverse_title), `<strong>${line(v.reverse_title)}</strong>`)}
+        ${tag(has(v.reverse_desc), `<span>${richText(v.reverse_desc)}</span>`)}
+      </div>
+    </div>` : '';
+    var tiles = [tileObverse, tileReverse].filter(Boolean);
+    var closeup = (closeupHeading || tiles.length) ? `${closeupHeading}${closeupHeading && tiles.length ? '\n\n  ' : ''}${tiles.length ? `<div class="zn-closeup-grid">\n    ${tiles.join('\n    ')}\n  </div>` : ''}`.trim() : '';
+
+    var packaging = (has(v.pack_title) || has(v.pack_p1) || has(v.pack_p2)) ? `<div class="zn-packaging">
+    <div class="zn-packaging-img">
+      ${imgTag(1, 'Oprawa produktu', 'zdjęcie opakowania/oprawy')}
+    </div>
+    <div class="zn-packaging-text">
+      <div class="zn-eyebrow">Prezentacja</div>
+      ${tag(has(v.pack_title), `<h3 class="zn-serif">${line(v.pack_title)}</h3>`)}
+      ${tag(has(v.pack_p1), `<p>${richText(v.pack_p1)}</p>`)}
+      ${tag(has(v.pack_p2), `<p>${richText(v.pack_p2)}</p>`)}
+    </div>
+  </div>` : '';
+
+    var section2 = (has(v.eyebrow2) || has(v.heading2) || has(v.desc2)) ?
+      tag(has(v.eyebrow2), `<div class="zn-eyebrow">${line(v.eyebrow2)}</div>\n  `) +
+      tag(has(v.heading2), `<div class="zn-heading zn-serif">${line(v.heading2)}</div>\n  `) +
+      tag(has(v.desc2), `<p class="zn-subhead">${richText(v.desc2)}</p>`)
+      : '';
+    section2 = section2.trim();
+
+    return `<div class="zn-wrap">
+  <style>${CSS_DLUGI_ZDJECIA}</style>
+
+  ${joinSections([section1, closeup, packaging, section2])}
+
+</div>`;
+  },
+  wordOutline: function(v){
+    var out = [];
+    function addLine(role, val){ if(has(val)) out.push({role: role, text: line(val)}); }
+    function addBody(val){ splitParagraphsBold(val).forEach(function(p){ out.push({role:'body', text: p}); }); }
+    addLine('subheading', v.eyebrow1);
+    addLine('heading', v.heading1);
+    addLine('subheading', v.subheading1);
+    addBody(v.desc1);
+    addLine('subheading', v.detail_eyebrow);
+    addLine('heading', v.detail_heading);
+    if(has(v.obverse_title) || has(v.obverse_desc)) pushImgMarker(out, 'zbliżenie AWERSU');
+    addLine('subheading', v.obverse_title); addBody(v.obverse_desc);
+    if(has(v.reverse_title) || has(v.reverse_desc)) pushImgMarker(out, 'zbliżenie REWERSU');
+    addLine('subheading', v.reverse_title); addBody(v.reverse_desc);
     if(has(v.pack_title) || has(v.pack_p1) || has(v.pack_p2)) pushImgMarker(out, 'oprawa / opakowanie');
     addLine('subheading', v.pack_title);
     addBody(v.pack_p1);
@@ -1114,7 +1246,7 @@ var TPL_WLASNY = {
   id: 'wlasny', name: 'WŁASNY', desc: 'buduj sam z bloków — dodawaj i przeciągaj', isCustom: true, fields: []
 };
 
-var TEMPLATES = [TPL_PROSTY, TPL_DLUGI, TPL_ZAAWANSOWANY, TPL_WLASNY];
+var TEMPLATES = [TPL_PROSTY, TPL_DLUGI, TPL_DLUGI_ZDJECIA, TPL_ZAAWANSOWANY, TPL_WLASNY];
 
 /* ============================================================
    APLIKACJA
@@ -1494,17 +1626,66 @@ function showSaveTemplateModal(){
   input.addEventListener('keydown', function(e){ if(e.key === 'Enter') saveBtn.click(); });
 }
 
+// DŁUGI-ZDJĘCIA-A/R nie ma własnego kafelka w wyborze szablonów — dostępny jest
+// jako wariant pod kafelkiem DŁUGI (patrz showDlugiVariantModal)
+var HIDDEN_FROM_PICKER = ['dlugi-zdjecia'];
+
 function initPicker(){
   var wrap = document.getElementById('tplPicker');
   wrap.innerHTML = '';
-  TEMPLATES.forEach(function(t){
+  TEMPLATES.filter(function(t){ return HIDDEN_FROM_PICKER.indexOf(t.id) === -1; }).forEach(function(t){
     var btn = document.createElement('div');
     btn.className = 'tpl-btn';
     btn.innerHTML = '<strong>' + t.name + '</strong><span>' + t.desc + '</span>';
-    btn.addEventListener('click', function(){ selectTemplate(t.id); });
     btn.dataset.id = t.id;
+    if(t.id === 'dlugi'){
+      btn.addEventListener('click', function(){ showDlugiVariantModal(); });
+    } else {
+      btn.addEventListener('click', function(){ selectTemplate(t.id); });
+    }
     wrap.appendChild(btn);
   });
+}
+
+// mały modal wyboru między klasycznym DŁUGI a wariantem z galerią zbliżeń Awers/Rewers
+function showDlugiVariantModal(){
+  var overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  var box = document.createElement('div');
+  box.className = 'modal-box';
+  box.innerHTML = '<h3>Wybierz wariant szablonu DŁUGI</h3>';
+
+  var optWrap = document.createElement('div');
+  optWrap.style.cssText = 'display:flex; flex-direction:column; gap:10px; margin-top:6px;';
+
+  function makeOption(title, desc, tplId){
+    var opt = document.createElement('button');
+    opt.className = 'tpl-btn';
+    opt.style.cssText = 'width:100%; text-align:left; cursor:pointer;';
+    opt.innerHTML = '<strong>' + title + '</strong><span>' + desc + '</span>';
+    opt.addEventListener('click', function(){
+      overlay.remove();
+      selectTemplate(tplId);
+    });
+    return opt;
+  }
+
+  optWrap.appendChild(makeOption('Klasyczny', '2 sekcje tekstowe + oprawa, bez cytatu/FAQ', 'dlugi'));
+  optWrap.appendChild(makeOption('Ze zdjęciami Awers/Rewers', 'jak klasyczny, plus galeria zbliżeń przed sekcją Oprawa', 'dlugi-zdjecia'));
+  box.appendChild(optWrap);
+
+  var actions = document.createElement('div');
+  actions.className = 'modal-actions';
+  var cancelBtn = document.createElement('button');
+  cancelBtn.className = 'secondary';
+  cancelBtn.textContent = 'Anuluj';
+  cancelBtn.addEventListener('click', function(){ overlay.remove(); });
+  actions.appendChild(cancelBtn);
+  box.appendChild(actions);
+
+  overlay.appendChild(box);
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
 }
 
 function selectTemplate(id){
@@ -1514,7 +1695,8 @@ function selectTemplate(id){
   currentTpl.fields.forEach(function(f){ values[f.key] = f.def || ''; });
   // uwaga: customBlocks (szablon WŁASNY) NIE resetuje się przy przełączaniu — tylko przy odświeżeniu strony
   document.querySelectorAll('.tpl-btn').forEach(function(b){
-    b.classList.toggle('active', b.dataset.id === id);
+    var isActive = b.dataset.id === id || (b.dataset.id === 'dlugi' && id === 'dlugi-zdjecia');
+    b.classList.toggle('active', isActive);
   });
   renderForm();
   renderPreview();
