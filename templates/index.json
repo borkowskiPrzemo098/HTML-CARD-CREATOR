@@ -1670,5 +1670,29 @@
       ],
       "blockIdSeq": 15
     }
+  },
+  {
+    "id": "tpl_mtvdx4om39okbd",
+    "name": "Leonardo da Vinci - Dama z gronostajem - złota moneta",
+    "savedAt": "2026-09-10T10:28:50.038Z",
+    "tplId": "dlugi",
+    "state": {
+      "tplId": "dlugi",
+      "values": {
+        "eyebrow1": "NIEŚMIERTELNOŚĆ GENIUSZU",
+        "heading1": "Wielka sztuka w miniaturze",
+        "subheading1": "Złota moneta kolekcjonerska oddająca hołd arcydziełu malarstwa:  Leonardo da Vinci „Dama z gronostajem”",
+        "desc1": "„Geniusz nie zna granic czasu” – ta myśl przewodnia przyświeca wyjątkowej serii numizmatycznej poświęconej najsłynniejszym arcydziełom malarstwa Leonarda da Vinci. Po dziś dzień jego twórczość niezmiennie zachwyca i inspiruje ludzi na całym świecie, wywierając niezatarte piętno na kolejnych pokoleniach twórców oraz miłośników sztuki.\n\nPonadczasowy status obrazu „Dama z gronostajem” w historii sztuki znalazł swoje odzwierciedlenie w specjalnej edycji monet kolekcjonerskich wybitych w szlachetnym kruszcu. Limitowana emisja ze **złota próby 999** stanowi fuzję **wyrafinowanego rzemiosła menniczego i wizjonerskiego malarstwa.**\n",
+        "pack_title": "Prestiżowa oprawa w zestawie",
+        "pack_p1": "Każdy egzemplarz **złotej monety-obrazu** został zabezpieczony w opatentowanej kapsule ochronnej i umieszczony w eleganckiej, kunsztownie wykonanej kasecie kolekcjonerskiej. Dopełnieniem zestawu jest pięknie zaprojektowany certyfikat autentyczności. ",
+        "pack_p2": "To wyjątkowe wydanie, łączące **walory numizmatyczne z unikalną oprawą** wizualną, czyni z niecodziennej złotej monety efektowny obiekt kolekcjonerski, a także finezyjny upominek. \n",
+        "eyebrow2": "ORYGINAŁ",
+        "heading2": "Najcenniejszy obraz w polskich zbiorach, skarb Muzeum Narodowego w Krakowie",
+        "desc2": "„Dama z gronostajem” to jeden z **najcenniejszych obrazów na świecie** oraz **jedyne dzieło malarstwa Leonarda da Vinci w polskich zbiorach** publicznych, przechowywane na stałe w **Muzeum Narodowym w Krakowie.** Portret, wykonany techniką olejną na drewnie orzechowym, powstał około 1489–1490 roku w Mediolanie i przedstawia niespełna siedemnastoletnią **Cecylię Gallerani**, piękną i wykształconą damę dworu i kochankę księcia Ludovica Sforzy. Obraz fascynuje rewolucyjnym, jak na tamte czasy, ujęciem postaci w trzech czwartych – modelka nie pozuje sztywno z profilu, lecz jest zwrócona, jakby jej uwagę przykuł ktoś właśnie wchodzący do pomieszczenia. Dzięki temu zabiegowi kompozycja zyskała niezwykłą dynamiczność niespotykaną we wcześniejszym malarstwie portretowym.\n\nDzieło kryje w sobie wiele fascynujących tajemnic i ciekawostek, z których największą jest symbolika trzymanego przez kobietę zwierzęcia. **Biały gronostaj** (często błędnie nazywany łasiczką) to czytelna aluzja do samego księcia Sforzy, nazywanego „Ermellino Bianco” (biały gronostaj), ale też symbol czystości, gracji i nawiązanie do nazwiska damy w języku greckim (gr. galé = gronostaj).  Badania rentgenowskie wykazały, że da Vinci kilkukrotnie przemalowywał obraz. Do Polski portret trafił około 1800 roku dzięki księciu Adamowi Jerzemu Czartoryskiemu, który nabył go jako prezent dla swojej matki, Izabeli, tworzącej w Puławach pierwsze polskie muzeum. Wartość rynkową arcydzieła uznaje się za **niemożliwą do oszacowania**; ubezpieczone jest na kwotę 300 milionów euro. \n"
+      },
+      "removed": [],
+      "customBlocks": [],
+      "blockIdSeq": 1
+    }
   }
 ]
