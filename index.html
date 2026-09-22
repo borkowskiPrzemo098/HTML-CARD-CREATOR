@@ -1358,8 +1358,19 @@ function apiListTemplates(){
   var sep = url.indexOf('?') > -1 ? '&' : '?';
   return fetch(url + sep + 'action=list')
     .then(function(r){ return r.json(); })
-    .then(function(data){ return (data && data.items) || []; })
-    .catch(function(){ return 'error'; });
+    .then(function(data){
+      // WAŻNE: błąd backendu (np. wygasły token) musi być odróżniony od naprawdę pustej listy —
+      // inaczej realna awaria wygląda jak "brak zapisanych szablonów" i ukrywa problem.
+      if(!data || data.ok !== true){
+        console.error('Lista szablonów — błąd backendu:', data && data.error);
+        return 'error';
+      }
+      return data.items || [];
+    })
+    .catch(function(err){
+      console.error('Lista szablonów — błąd połączenia:', err);
+      return 'error';
+    });
 }
 
 // wspólny POST do aktywnego backendu — Vercel dostaje czysty JSON (pełna kontrola CORS/OPTIONS),
