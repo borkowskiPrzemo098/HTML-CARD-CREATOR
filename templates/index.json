@@ -1848,5 +1848,87 @@
       ],
       "blockIdSeq": 9
     }
+  },
+  {
+    "id": "tpl_mul6vhm6h2jx36",
+    "name": "ŁAPACZ SNÓW - srebrna moneta 1 oz 2026 - GOTOWY",
+    "savedAt": "2026-09-28T11:53:36.750Z",
+    "tplId": "wlasny",
+    "state": {
+      "tplId": "wlasny",
+      "values": {},
+      "removed": [],
+      "customBlocks": [
+        {
+          "id": 1,
+          "type": "header",
+          "values": {
+            "eyebrow": "ŁAPACZ SNÓW",
+            "heading": "Duchowe dziedzictwo rdzennych mieszkańców Ameryki Północnej utrwalone w czystym srebrze",
+            "subhead": "\n"
+          }
+        },
+        {
+          "id": 8,
+          "type": "stats",
+          "values": {
+            "s1_num": "1",
+            "s1_unit": "oz",
+            "s1_label": "waga",
+            "s2_num": "999",
+            "s2_unit": "",
+            "s2_label": "próba srebra",
+            "s3_num": "60",
+            "s3_unit": "mm",
+            "s3_label": "średnica",
+            "s4_num": "999",
+            "s4_unit": "",
+            "s4_label": "limitacja"
+          }
+        },
+        {
+          "id": 3,
+          "type": "text",
+          "values": {
+            "eyebrow": "",
+            "heading": "DZIEDZICTWO",
+            "body": "Łapacz snów należy do najbardziej rozpoznawalnych motywów związanych z kulturami rdzennych mieszkańców Ameryki Północnej. Jego korzenie sięgają tradycji ludu Odżibwejów (ang. Ojibwe), a z czasem zwyczaj ten przyjęli również przedstawiciele innych społeczności, w tym Lakota. Według dawnych wierzeń amulet miał chronić śpiącego przed złymi snami – zatrzymywać te niepożądane w kunsztownie splecionej sieci, a dobre przepuszczać dalej."
+          }
+        },
+        {
+          "id": 4,
+          "type": "gallery2",
+          "values": {
+            "eyebrow": "",
+            "heading": "MONETA",
+            "sub": "Najedź kursorem, by zobaczyć więcej.",
+            "t1_title": "REWERS i AWERS",
+            "t1_desc": "",
+            "t2_title": "",
+            "t2_desc": ""
+          }
+        },
+        {
+          "id": 5,
+          "type": "text",
+          "values": {
+            "eyebrow": "",
+            "heading": "",
+            "body": "Centralny motyw **rewersu** ukazuje misternie wykonany **łapacz snów** – z okrągłą obręczą, delikatną siecią przypominającą pajęczynę oraz elementami dekoracyjnymi z piór i koralików – który pięknie prezentuje się na lustrzanej powierzchni. Otaczają go napisy: DREAMCATCHER, a także potwierdzenie jakości, wagi kruszcu i rok emisji.\n\n**Awers** zdobi odbicie ażurowej sieci łapacza snów przedstawionego z drugiej strony numizmatu oraz oficjalny emblemat Oglala Lakota Sioux Nation umieszczony na promienistym tle. Na otoku widnieje nazwa **emitenta OGLALA LAKOTA SIOUX NATION** oraz nominał ONE DOLLAR, oddzielone wzorem z piór i koralików.\n\nEfektowna moneta kolekcjonerska wybita została w **1 uncji** czystego **srebra próby 999**, w **najwyższej jakości menniczej** (proof), a jej **duża średnica – 60 mm** – pozwala z łatwością dostrzec precyzyjnie odwzorowane detale projektu. **Ściśle limitowany światowy nakład** wynosi zaledwie **999** egzemplarzy."
+          }
+        },
+        {
+          "id": 6,
+          "type": "packaging",
+          "values": {
+            "eyebrow": "Prezentacja",
+            "title": "POMYSŁ NA ORYGINALNY UPOMINEK",
+            "p1": "Emisję uzupełniają **elegancka kasetka kolekcjonerska**, **certyfikat autentyczności** oraz **miniaturowy łapacz snów**. Niewielki dodatek nawiązuje do głównego motywu monety i harmonijnie dopełnia zestaw, nadając mu charakter przemyślanego upominku dla osób ceniących historię, kulturę i głębokie tradycje. ",
+            "p2": ""
+          }
+        }
+      ],
+      "blockIdSeq": 9
+    }
   }
 ]
