@@ -1872,5 +1872,32 @@
       "customBlocks": [],
       "blockIdSeq": 1
     }
+  },
+  {
+    "id": "tpl_mur3465j6jkbce",
+    "name": "HMS BOUNTY - złota moneta Wyspy Pitcairn 2026 - GOTOWY",
+    "savedAt": "2026-10-02T14:55:00.391Z",
+    "tplId": "dlugi",
+    "state": {
+      "tplId": "dlugi",
+      "values": {
+        "eyebrow1": "HMS Bounty",
+        "heading1": "Bunt, który zmienił bieg historii",
+        "subheading1": "Złota emisja kolekcjonerska brytyjskiego terytorium zamorskiego upamiętniająca legendarny żaglowiec",
+        "desc1": "Efektowna złota moneta kolekcjonerska **HMS Bounty** 2026, wyemitowana przez **Wyspy Pitcairn** (brytyjskie terytorium zamorskie na Oceanie Spokojnym), została wybita z czystego złota najwyższej **próby 999** przez renomowaną brytyjską mennicę Tower Mint. Emisja poświęcona jest jednemu z najsłynniejszych żaglowców w historii, który zapisał się w dziejach za sprawą głośnego buntu załogi w 1789 roku. Po rebelii część marynarzy znalazła schronienie na wyspie Pitcairn, dając początek dzisiejszej społeczności tego odizolowanego archipelagu.\n\nRewers przedstawia HMS Bounty pod pełnymi żaglami podczas rejsu przez ocean. \nKunsztowny relief – detale żagli, fal morskich, ozdobnych kotwic na obrzeżu – odzwierciedla najwyższą jakość menniczą. Na awersie widnieje oficjalny portret Króla Karola III, zaprojektowany przez Glyna Daviesa, wraz z nominałem oraz nazwą emitenta. \n\nDzięki ściśle limitowanemu nakładowi – **jedynie 2 500 egzemplarzy** – oraz finezji wykonania moneta stanowi atrakcyjną propozycję zarówno dla kolekcjonerów numizmatyki, jak i miłośników historii morskiej.\n",
+        "pack_title": "",
+        "pack_p1": "**Oprawa:** specjalna kapsuła ochronna służąca do bezpiecznego przechowywania i eksponowania monety\n\n**Awers:** niekoronowany portret króla Karola III, na obrysie szyi inicjały artysty – GD (Glyn Davies); napisy w otoku: CHARLES III · PITCAIRN ISLANDS · 25 CENTS · 2026 ·\n\n**Rewers:** wizerunek HMS Bounty pod pełnymi żaglami na falach oceanu, obrzeże zdobione małymi kotwicami; napisy: HMS BOUNTY, .999 Au 0.5 g\n",
+        "pack_p2": "",
+        "eyebrow2": "WYSPY PITCAIRN I HMS BOUNTY",
+        "heading2": "Żywe dziedzictwo dawnej rebelii",
+        "desc2": "**Wyspy Pitcairn** to brytyjskie terytorium zamorskie na Oceanie Spokojnym, które ze względu na niewielką populację liczącą mniej niż pięćdziesiąt osób nie emituje własnych monet obiegowych. Oficjalnym środkiem wymiany na archipelagu jest dolar nowozelandzki. Mimo to, w 1988 roku administracja Pitcairn rozpoczęła emisję własnych monet okolicznościowych. Choć **dolar Wysp Pitcairn** nie funkcjonuje w codziennym obiegu, formalnie stanowi prawny środek płatniczy powiązany w stosunku 1:1 z walutą Nowej Zelandii (ale nie można nim płacić na jej terytorium). Istnieje on wyłącznie na potrzeby rynku kolekcjonerskiego, stanowiąc jedno ze źródeł dochodu dla tej maleńkiej, wyspiarskiej społeczności.\n\nPowiązanie **HMS Bounty z Wyspami Pitcairn** to efekt jednego z najsłynniejszych buntów w historii światowej marynarki. W 1789 roku żaglowiec Royal Navy realizował misję przewiezienia sadzonek chlebowca z Tahiti na Karaiby. Narastający konflikt między kapitanem Williamem Blighem a załogą, na czele której stanął pierwszy oficer Fletcher Christian, doprowadził do rebelii. Christian wraz ze zwolennikami przejął okręt, a Bligha i lojalnych mu marynarzy pozostawił na pełnym morzu w szalupie. Chcąc uniknąć surowej kary, buntownicy popłynęli wraz z tahitańskimi towarzyszami na niezamieszkaną i odizolowaną wyspę Pitcairn. Po dotarciu do celu spalili Bounty, by zatrzeć ślady, i założyli ukrytą osadę. Ich potomkowie do dziś zamieszkują ów odległy skrawek lądu, tworząc unikalną społeczność bezpośrednio zakorzenioną w dziedzictwie sławetnego zrywu. Dramatyczne losy pierwszych osiedleńców wywarły głęboki wpływ na tożsamość kulturową Pitcairn oraz na specyficzną rolę archipelagu w brytyjskiej spuściźnie kolonialnej.\n"
+      },
+      "removed": [
+        "pack_title",
+        "pack_p2"
+      ],
+      "customBlocks": [],
+      "blockIdSeq": 1
+    }
   }
 ]
