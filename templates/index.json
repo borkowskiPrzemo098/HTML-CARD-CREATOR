@@ -1877,38 +1877,6 @@
     }
   },
   {
-    "id": "tpl_mvra776eaf8vdt",
-    "name": "Amerykański Orzeł– Jubileusz 40-lecia – zestaw kolekcjonerski 4 monet z miedzi Liberia 2026 -",
-    "savedAt": "2026-10-27T22:53:01.334Z",
-    "tplId": "wlasny",
-    "state": {
-      "tplId": "wlasny",
-      "values": {},
-      "removed": [],
-      "customBlocks": [
-        {
-          "id": 1,
-          "type": "header",
-          "values": {
-            "eyebrow": "AMERYKAŃSKI ORZEŁ – 40 LAT ",
-            "heading": "Jubileuszowy zestaw czterech monet z czystej miedzi",
-            "subhead": "**40 lat ikony amerykańskiej numizmatyki – wydanie kolekcjonerskie**"
-          }
-        },
-        {
-          "id": 5,
-          "type": "text",
-          "values": {
-            "eyebrow": "",
-            "heading": "",
-            "body": "Zestaw **Amerykański Orzeł – Jubileusz 40-lecia** (American Eagle 40 Years) upamiętnia 40. rocznicę pojawienia się jednej z najbardziej rozpoznawalnych serii monet Stanów Zjednoczonych.  Jubileuszowe wydanie kolekcjonerskie z 2026 roku obejmuje cztery okrągłe monety wykonane **z miedzi próby 999**, o wadze **2 uncji** oraz **1**, **½** i **¼ uncji**. Wspólnym motywem wszystkich egzemplarzy jest **bielik amerykański** – ptak, który od ponad dwóch stuleci zajmuje szczególne miejsce w dziejach i symbolice Stanów Zjednoczonych."
-          }
-        }
-      ],
-      "blockIdSeq": 6
-    }
-  },
-  {
     "id": "tpl_mvrcudyau2yhdg",
     "name": "Amerykański Orzeł – Jubileusz 40-lecia – zestaw kolekcjonerski 4 monet z miedzi Liberia 2026",
     "savedAt": "2026-10-28T00:07:02.434Z",
