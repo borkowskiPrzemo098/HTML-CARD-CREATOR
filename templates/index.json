@@ -1907,5 +1907,84 @@
       ],
       "blockIdSeq": 6
     }
+  },
+  {
+    "id": "tpl_mvrcudyau2yhdg",
+    "name": "Amerykański Orzeł – Jubileusz 40-lecia – zestaw kolekcjonerski 4 monet z miedzi Liberia 2026",
+    "savedAt": "2026-10-28T00:07:02.434Z",
+    "tplId": "wlasny",
+    "state": {
+      "tplId": "wlasny",
+      "values": {},
+      "removed": [],
+      "customBlocks": [
+        {
+          "id": 1,
+          "type": "header",
+          "values": {
+            "eyebrow": "AMERYKAŃSKI ORZEŁ – 40 LAT ",
+            "heading": "Jubileuszowy  zestaw czterech monet z czystej miedzi",
+            "subhead": "**40 lat ikony amerykańskiej numizmatyki – wydanie kolekcjonerskie**"
+          }
+        },
+        {
+          "id": 5,
+          "type": "text",
+          "values": {
+            "eyebrow": "",
+            "heading": "",
+            "body": "Zestaw **Amerykański Orzeł – Jubileusz 40-lecia** (American Eagle 40 Years) upamiętnia 40. rocznicę pojawienia się jednej z najbardziej rozpoznawalnych serii monet Stanów Zjednoczonych.  Jubileuszowe wydanie kolekcjonerskie z 2026 roku obejmuje cztery okrągłe monety wykonane **z miedzi próby 999**, o wadze **2 uncji** oraz **1**, **½** i **¼ uncji**. Wspólnym motywem wszystkich egzemplarzy jest **bielik amerykański** – ptak, który od ponad dwóch stuleci zajmuje szczególne miejsce w dziejach i symbolice Stanów Zjednoczonych."
+          }
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "values": {
+            "eyebrow": "HISTORIA",
+            "heading": "Bielik – symbol wolności i siły",
+            "body": "Bielik amerykański od początków istnienia USA kojarzony jest z wolnością, siłą i niezależnością. Dnia 20 czerwca 1782 roku przedstawiciele trzynastu amerykańskich stanów przyjęli Wielką Pieczęć Stanów Zjednoczonych, na której znalazł się wizerunek tego króla przestworzy. Odtąd jego sylwetka pojawiała się na dokumentach państwowych, monetach i innych oficjalnych znakach, stając się jednym z głównych wyróżników amerykańskiej tożsamości. Co ciekawe, dopiero w **2024 roku** bielik został formalnie ustanowiony **narodowym ptakiem Stanów Zjednoczonych**."
+          }
+        },
+        {
+          "id": 8,
+          "type": "packaging",
+          "values": {
+            "eyebrow": "PROJEKT",
+            "title": "American Eagle – 40 Years",
+            "p1": "**Rewers** jubileuszowych miedzianych emisji ukazuje kultowego ptaka w dynamicznym ujęciu: z rozpostartymi skrzydłami, lądującego w gnieździe, w którym czekają młode. Promienie słońca, rozłożyste gałęzie i sylwetki piskląt schronionych pod skrzydłem matki tworzą kompozycję odwołującą się do siły, ciągłości i troski o przyszłe pokolenia.\n\n\n\nDaty **1986–2026** wyznaczają **cztery dekady historii serii American Eagle.** W 1986 roku **U.S. Mint** rozpoczęła emisję pierwszych monet z motywem orła bielika – wybitych w złocie i srebrze, przeznaczonych przede wszystkim dla inwestorów. Z czasem cykl ten został rozszerzony o kolejne warianty i stał się jednym z najpopularniejszych na świecie programów emisyjnych Mennicy Amerykańskiej.\n",
+            "p2": ""
+          }
+        },
+        {
+          "id": 9,
+          "type": "text",
+          "values": {
+            "eyebrow": "MONETY",
+            "heading": "Cztery monety – jedna historia",
+            "body": "Na monetach specjalnego rocznicowego zestawu – wyemitowanego przez Liberię – umieszczono oznaczenie **„40 YEARS”**, a poniżej daty **„1986–2026”**. Promienie słońca widoczne w tle przedstawionej rodziny bielików wzmacniają wrażenie ruchu i nadają reliefowi wyrazistą, rzeźbiarską formę.\n\nKomplet tworzą cztery egzemplarze o różnych rozmiarach i wadze: **2, 1, ½** oraz **¼ uncji**. Ich średnice wynoszą odpowiednio **50**, **40**, **32,5** i **24,9 mm**, dzięki czemu cała kompozycja prezentuje się w czterech wyraźnie różniących się skalach. \n"
+          }
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "values": {
+            "eyebrow": "",
+            "heading": "Czysta miedź i efektowny relief",
+            "body": "Monety wybito w szlachetnej **miedzi próby 999**. Ciepła barwa metalu doskonale podkreśla walory projektu. Rzeźbiarska forma reliefu z dużą precyzją ukazuje sylwetkę bielika, detale jego upierzenia, gniazdo oraz rozchodzące się promienie słońca. Naturalne właściwości miedzi sprawiają, że z upływem czasu powierzchnia może pokryć się patyną, nadając każdemu egzemplarzowi indywidualny charakter."
+          }
+        },
+        {
+          "id": 11,
+          "type": "packaging",
+          "values": {
+            "eyebrow": "Prezentacja",
+            "title": "Oprawa i ścisła limitacja",
+            "p1": "Zestaw umieszczony jest w eleganckim **pudełku kolekcjonerskim** i uzupełniony **certyfikatem autentyczności**. Światowy nakład ograniczono do zaledwie **2500 kompletów**. \n\nCztery różne formaty, jedna spójna koncepcja i wizerunek bielika – który od 1782 roku towarzyszy historii Stanów Zjednoczonych – tworzą unikalną minikolekcję łączącą jubileusz American Eagle z ponadczasową wymową tego charakterystycznego motywu.\n",
+            "p2": ""
+          }
+        }
+      ],
+      "blockIdSeq": 12
+    }
   }
 ]
