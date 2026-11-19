@@ -1954,5 +1954,29 @@
       ],
       "blockIdSeq": 12
     }
+  },
+  {
+    "id": "tpl_mwnglxlngur0va",
+    "name": "Zestaw Kaplica Sykstyńska - eSklep",
+    "savedAt": "2026-11-19T11:21:04.091Z",
+    "tplId": "dlugi",
+    "state": {
+      "tplId": "dlugi",
+      "values": {
+        "eyebrow1": "MICHAŁ ANIOŁ",
+        "heading1": "Sztuka wielkiego formatu w miniaturowym majstersztyku",
+        "subheading1": "10 scen - jeden kompletny zastaw",
+        "desc1": "**Freski na sklepieniu Kaplicy Sykstyńskiej** zostały namalowane przez **Michała Anioła** w latach 1508–1512 na zlecenie papieża Juliusza II. Złote monety tworzące pamiątkowy zestaw odwzorowują **10 motywów** zaczerpniętych ze **scen z Księgi Rodzaju**, które zdobią środkowy pas sklepienia słynnej watykańskiej sali.",
+        "pack_title": "Oprawa godna kolekcjonera",
+        "pack_p1": "Kompletny zestaw 10 monet-obrazów spoczywa w eleganckiej kasecie kolekcjonerskiej stworzonej z myślą o gustownej ekspozycji oraz długotrwałym przechowywaniu. Każdy numizmat został zabezpieczony w specjalnej kapsule ochronnej i towarzyszy mu indywidualny certyfikat autentyczności.",
+        "pack_p2": "",
+        "eyebrow2": "MONETY ZESTAWU",
+        "heading2": "",
+        "desc2": "1.\tRozdzielenie światła i ciemności\n2.\tStworzenie Słońca, Księżyca i roślinności\n3.\tOddzielenie ziemi od wody\n4.\tStworzenie Adama\n5.\tStworzenie Ewy\n6.\tGrzech pierworodny\n7.\tWygnanie z raju\n8.\tOfiara Noego\n9.\tPotop\n10.\tOpilstwo Noego\n\nKażda moneta została wybita z niezwykłą precyzją w czystym złocie próby 999 oraz uszlachetniona kolorem. Wspólnie tworzą one harmonijny zestaw, który łączy piękno szlachetnego metalu, ponadczasową symbolikę słynnego arcydzieła Michała Anioła oraz elegancję wyjątkowego upominku."
+      },
+      "removed": [],
+      "customBlocks": [],
+      "blockIdSeq": 1
+    }
   }
 ]
