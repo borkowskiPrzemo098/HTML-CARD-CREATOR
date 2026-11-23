@@ -2161,5 +2161,68 @@
       ],
       "blockIdSeq": 20
     }
+  },
+  {
+    "id": "tpl_mwtiueg6hqjc5v",
+    "name": "Awers: herb Republiki Czadu; napisy: RÉPUBLIQUE DU TCHAD, 3000 FRANCS CFA, 999/1000 FINE GOLD  Rewers: świąteczna choinka z prezentami u podstawy, w tle płatki śniegu; napis: Merry Christmas",
+    "savedAt": "2026-11-23T17:10:15.462Z",
+    "tplId": "wlasny",
+    "state": {
+      "tplId": "wlasny",
+      "values": {},
+      "removed": [],
+      "customBlocks": [
+        {
+          "id": 15,
+          "type": "header",
+          "values": {
+            "eyebrow": "CHOINKA",
+            "heading": "Świąteczny urok utrwalony w czystym złocie",
+            "subhead": "**Limitowana emisja okolicznościowa**"
+          }
+        },
+        {
+          "id": 16,
+          "type": "text",
+          "values": {
+            "eyebrow": "",
+            "heading": "",
+            "body": "Złota moneta kolekcjonerska „Merry Christmas - Choinka” to elegancka propozycja dla miłośników bożonarodzeniowej symboliki i oryginalnych upominków. Jej rewers zdobi misternie przedstawione drzewko z prezentami u podstawy, otoczone płatkami śniegu i napisem „Merry Christmas”. Złota tonacja nadaje kompozycji szlachetny, dekoracyjny charakter."
+          }
+        },
+        {
+          "id": 17,
+          "type": "packaging",
+          "values": {
+            "eyebrow": "PREZENTACJA",
+            "title": "Świąteczna, barwna oprawa z certyfikatem autentyczności",
+            "p1": "Limitowana emisja okolicznościowa dostarczana jest w barwnej, specjalnie zaprojektowanej karcie zabezpieczającej zawierającej certyfikat autentyczności. Jej szata graficzna przedstawia malowniczy, śnieżny krajobraz z udekorowaną choinką i kolorowymi podarunkami. Całości dopełnia czerwony napis „Merry Christmas”.",
+            "p2": ""
+          }
+        },
+        {
+          "id": 18,
+          "type": "text",
+          "values": {
+            "eyebrow": "",
+            "heading": "",
+            "body": "Awers: herb Republiki Czadu; napisy: RÉPUBLIQUE DU TCHAD, 3000 FRANCS CFA, 999/1000 FINE GOLD\n\nRewers: świąteczna choinka z prezentami u podstawy, w tle płatki śniegu; napis: Merry Christmas\n"
+          }
+        },
+        {
+          "id": 19,
+          "type": "trust",
+          "values": {
+            "t1_t": "",
+            "t1_d": "",
+            "t2_t": "",
+            "t2_d": "",
+            "t3_t": "",
+            "t3_d": ""
+          }
+        }
+      ],
+      "blockIdSeq": 20
+    }
   }
 ]
