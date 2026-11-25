@@ -1980,69 +1980,6 @@
     }
   },
   {
-    "id": "tpl_mww565n2si831j",
-    "name": "Anioł Stróż - złoty numizmat w kształcie anioła",
-    "savedAt": "2026-11-25T13:10:47.822Z",
-    "tplId": "wlasny",
-    "state": {
-      "tplId": "wlasny",
-      "values": {},
-      "removed": [],
-      "customBlocks": [
-        {
-          "id": 15,
-          "type": "header",
-          "values": {
-            "eyebrow": "CHOINKA",
-            "heading": "Świąteczny urok utrwalony w czystym złocie",
-            "subhead": "**Limitowana emisja okolicznościowa**"
-          }
-        },
-        {
-          "id": 16,
-          "type": "text",
-          "values": {
-            "eyebrow": "",
-            "heading": "",
-            "body": "Złota moneta kolekcjonerska „Merry Christmas - Choinka” to elegancka propozycja dla miłośników bożonarodzeniowej symboliki i oryginalnych upominków. Jej rewers zdobi misternie przedstawione drzewko z prezentami u podstawy, otoczone płatkami śniegu i napisem „Merry Christmas”. Złota tonacja nadaje kompozycji szlachetny, dekoracyjny charakter."
-          }
-        },
-        {
-          "id": 17,
-          "type": "packaging",
-          "values": {
-            "eyebrow": "PREZENTACJA",
-            "title": "Świąteczna, barwna oprawa z certyfikatem autentyczności",
-            "p1": "Limitowana emisja okolicznościowa dostarczana jest w barwnej, specjalnie zaprojektowanej karcie zabezpieczającej zawierającej certyfikat autentyczności. Jej szata graficzna przedstawia malowniczy, śnieżny krajobraz z udekorowaną choinką i kolorowymi podarunkami. Całości dopełnia czerwony napis „Merry Christmas”.",
-            "p2": ""
-          }
-        },
-        {
-          "id": 18,
-          "type": "text",
-          "values": {
-            "eyebrow": "",
-            "heading": "",
-            "body": "Awers: herb Republiki Czadu; napisy: RÉPUBLIQUE DU TCHAD, 3000 FRANCS CFA, 999/1000 FINE GOLD\n\nRewers: świąteczna choinka z prezentami u podstawy, w tle płatki śniegu; napis: Merry Christmas\n"
-          }
-        },
-        {
-          "id": 20,
-          "type": "trust",
-          "values": {
-            "t1_t": "Certyfikat autentyczności",
-            "t1_d": "Numizmat posiada swój własny certyfikat w formie dedykowanej karty zabezpieczającej.",
-            "t2_t": "Oryginalne opakowanie",
-            "t2_d": "Elegancka karta z numizmatem jest gotowa do wręczenia, bez potrzeby dodatkowego pakowania.",
-            "t3_t": "Bezpieczna dostawa",
-            "t3_d": "Dyskretnie zapakowana przesyłka została dostosowana do przewozu metali szlachetnych."
-          }
-        }
-      ],
-      "blockIdSeq": 21
-    }
-  },
-  {
     "id": "tpl_mww5ibjk6gignu",
     "name": "Wesołych Świąt - CHOINKA - złota moneta",
     "savedAt": "2026-11-25T13:20:15.344Z",
