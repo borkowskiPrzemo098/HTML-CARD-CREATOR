@@ -2230,5 +2230,68 @@
       ],
       "blockIdSeq": 21
     }
+  },
+  {
+    "id": "tpl_mww7nt8r61wrvr",
+    "name": "WESOŁYCH ŚWIĄT - ŚWIECA - złota moneta",
+    "savedAt": "2026-11-25T14:20:30.795Z",
+    "tplId": "wlasny",
+    "state": {
+      "tplId": "wlasny",
+      "values": {},
+      "removed": [],
+      "customBlocks": [
+        {
+          "id": 15,
+          "type": "header",
+          "values": {
+            "eyebrow": "wesołych świąt - ŚWIECA",
+            "heading": "Świąteczny upominek z czystego złota",
+            "subhead": "**Limitowana emisja okolicznościowa**"
+          }
+        },
+        {
+          "id": 16,
+          "type": "text",
+          "values": {
+            "eyebrow": "",
+            "heading": "",
+            "body": "Zaskocz swoich bliskich i podaruj im wyjątkowy upominek z okazji Bożego Narodzenia: filigranową złotą monetę w kształcie sztabki z ilustracją świątecznej dekoracji z płonącą świecą i napisem **„Merry Christmas”**, należącą do limitowanej emisji okolicznościowej."
+          }
+        },
+        {
+          "id": 17,
+          "type": "packaging",
+          "values": {
+            "eyebrow": "PREZENTACJA",
+            "title": "Piękna, świąteczna oprawa z certyfikatem autentyczności",
+            "p1": "Moneta umieszczona jest w barwnej karcie okolicznościowej z napisem **„Merry Christmas”**, pełniącej jednocześnie funkcję certyfikatu autentyczności.",
+            "p2": "To doskonały pomysł na prezent, który wywoła uśmiech i pozostanie miłą pamiątką na lata."
+          }
+        },
+        {
+          "id": 18,
+          "type": "text",
+          "values": {
+            "eyebrow": "",
+            "heading": "",
+            "body": "**Awers:** herb Republiki Czadu; napisy: RÉPUBLIQUE DU TCHAD, 3000 FRANCS CFA, 999/1000 FINE GOLD\n\n**Rewers:** świąteczna dekoracja – płonąca świeca i bombki, w tle płatki śniegu; napis: Merry Christmas"
+          }
+        },
+        {
+          "id": 20,
+          "type": "trust",
+          "values": {
+            "t1_t": "Certyfikat autentyczności",
+            "t1_d": "Numizmat posiada certyfikat w formie dedykowanej karty zabezpieczającej.",
+            "t2_t": "Oryginalne opakowanie",
+            "t2_d": "Elegancka karta z numizmatem jest gotowa do wręczenia.",
+            "t3_t": "Bezpieczna dostawa",
+            "t3_d": "Dyskretnie zapakowana przesyłka została dostosowana do przewozu metali szlachetnych."
+          }
+        }
+      ],
+      "blockIdSeq": 21
+    }
   }
 ]
