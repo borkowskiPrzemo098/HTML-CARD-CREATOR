@@ -2419,5 +2419,29 @@
       ],
       "blockIdSeq": 21
     }
+  },
+  {
+    "id": "tpl_mwxjzrd4wcqkpn",
+    "name": "Gustaw Klimt - zestaw 10 złotych monet",
+    "savedAt": "2026-11-26T12:53:29.800Z",
+    "tplId": "dlugi",
+    "state": {
+      "tplId": "dlugi",
+      "values": {
+        "eyebrow1": "GUSTAW KLIMT",
+        "heading1": "Sztuka wielkiego formatu w miniaturowym majstersztyku",
+        "subheading1": "10 dzieł - jeden zestaw",
+        "desc1": "**Gustav Klimt** (1862–1918) – wybitny austriacki malarz, współtwórca wiedeńskiej secesji i jeden z najbardziej fascynujących artystów przełomu XIX i XX wieku – **stworzył niepowtarzalny styl, w którym bogactwo ornamentów, subtelna zmysłowość i głęboka symbolika splatają się z blaskiem złota**. Zainspirowany pięknem bizantyjskich mozaik, artysta wykorzystywał w swoich kompozycjach prawdziwe złoto płatkowe. To właśnie w „złotym okresie” jego twórczości powstały „Pocałunek” oraz „Złota Adela” – arcydzieła, które z czasem stały się ikonami światowej kultury.\n\nZłote monety tworzące pamiątkowy zestaw odwzorowują **10 wyjątkowych dzieł Gustava Klimta**, oddających bogactwo i różnorodność jego twórczości. ",
+        "pack_title": "Oprawa godna kolekcjonera",
+        "pack_p1": "Zestaw 10 złotych monet-obrazów spoczywa w eleganckiej **kasecie kolekcjonerskiej** zaprojektowanej z myślą o gustownej ekspozycji oraz długotrwałym przechowywaniu. Każdy numizmat został zabezpieczony w specjalnej **kapsule ochronnej** i towarzyszy mu indywidualny **certyfikat autentyczności**.",
+        "pack_p2": "",
+        "eyebrow2": "MONETY ZESTAWU",
+        "heading2": "",
+        "desc2": "1.\t**Pocałunek** (ok. 1907–1909)                                                                                       \n2.\t**Judyta I** (1901)\n3.\t**Portret panny Lieser** (1917)\n4.\t**Dama z wachlarzem** (1917–1918)\n5.\t**Drzewo życia** (1910–1911)\n6.\t**Kościół w Cassone** (1913)\n7.\t**Portret Adele Bloch-Bauer I – Złota Adela** (1907)\n8.\t**Hygieia** (1900–1907)\n9.\t**Tancerka** (1916–1917)\n10.\t**Jabłoń I** (ok. 1912)\n\nKażda moneta została wybita z niezwykłą precyzją w czystym **złocie próby 999**. Razem składają się one na harmonijny zestaw, w którym szlachetny kruszec spotyka się ze sztuką mistrza. To finezyjne **połączenie ponadczasowego piękna, kunsztu menniczego oraz elegancji wyszukanego upominku**."
+      },
+      "removed": [],
+      "customBlocks": [],
+      "blockIdSeq": 1
+    }
   }
 ]
